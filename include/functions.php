@@ -1,5 +1,23 @@
 <?php
 
+function init_analytics()
+{
+	$setting_analytics_save_admin_stats = get_option('setting_analytics_save_admin_stats');
+
+	if($setting_analytics_save_admin_stats)
+	{
+		if(is_user_logged_in())
+		{
+			add_filter('admin_footer_text', 'footer_analytics');
+		}
+
+		else
+		{
+			add_filter('login_footer', 'footer_analytics');
+		}
+	}
+}
+
 function settings_analytics()
 {
 	$options_page = "settings_mf_base";
@@ -15,6 +33,7 @@ function settings_analytics()
 	$arr_settings = array(
 		"setting_analytics_google" => __("Google", 'lang_analytics'),
 		"setting_analytics_clicky" => __("Clicky", 'lang_analytics'),
+		"setting_analytics_save_admin_stats" => __("Save admin statistics", 'lang_analytics'),
 	);
 
 	foreach($arr_settings as $handle => $text)
@@ -37,17 +56,12 @@ function setting_analytics_google_callback()
 	if($option == '')
 	{
 		$option = get_option('web_property_id');
-
-		if($option != '')
-		{
-			delete_option('web_property_id');
-		}
 	}
 
 	$tracking_example = "UA-0000000-0";
 
 	echo "<label>
-		<input type='text' name='setting_analytics_google' value='".$option."' class='widefat' placeholder='".$tracking_example."...'>"
+		<input type='text' name='setting_analytics_google' value='".$option."' placeholder='".$tracking_example."...'>"
 		."<span class='description'>".__("Login to your account and find the tracking code looking like", 'lang_analytics')." ".$tracking_example."</span>"
 	."</label>";
 }
@@ -56,12 +70,22 @@ function setting_analytics_clicky_callback()
 {
 	$option = get_option('setting_analytics_clicky');
 
-	$tracking_example = "UA-0000000-0";
+	//$tracking_example = "UA-0000000-0";
 
 	echo "<label>
-		<input type='text' name='setting_analytics_clicky' value='".$option."' class='widefat'>" // placeholder='".$tracking_example."...'
-		//."<span class='description'>".__("Login to your account and find the tracking code looking like", 'lang_analytics')." ".$tracking_example."</span>"
+		<input type='text' name='setting_analytics_clicky' value='".$option."'>" // placeholder='".$tracking_example."...'
+		//."<br><span class='description'>".__("Login to your account and find the tracking code looking like", 'lang_analytics')." ".$tracking_example."</span>"
 	."</label>";
+}
+
+function setting_analytics_save_admin_stats_callback()
+{
+	$option = get_option('setting_analytics_save_admin_stats');
+
+	echo "<label>
+		<input type='checkbox' name='setting_analytics_save_admin_stats' value='1' ".checked(1, $option, false).">
+		<br><span class='description'>".__("Check if you would like to save admin statistics", 'lang_analytics')."</span>
+	</label>";
 }
 
 function footer_analytics()
