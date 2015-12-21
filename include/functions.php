@@ -25,7 +25,7 @@ function settings_analytics()
 
 	add_settings_section(
 		$options_area,
-		__("Analytics", 'lang_analytics'),
+		"",
 		'settings_analytics_callback',
 		$options_page
 	);
@@ -46,7 +46,8 @@ function settings_analytics()
 
 function settings_analytics_callback()
 {
-	echo "<div id='settings_analytics'></div>";
+	echo "<div id='settings_analytics'>&nbsp;</div>
+	<a href='#settings_analytics'><h3>".__("Analytics", 'lang_analytics')."</h3></a>";
 }
 
 function setting_analytics_google_callback()

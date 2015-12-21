@@ -2,17 +2,13 @@
 /*
 Plugin Name: MF Analytics
 Plugin URI: http://github.com/frostkom/mf_analytics
-Version: 1.1.3
+Description: 
+Version: 1.1.4
 Author: Martin Fors
 Author URI: http://frostkom.se
 */
 
-add_action('init', 'include_analytics');
-
-function include_analytics()
-{
-	include_once("include/functions.php");
-}
+include_once("include/functions.php");
 
 add_action('init', 'init_analytics');
 
