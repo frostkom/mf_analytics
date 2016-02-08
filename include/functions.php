@@ -18,6 +18,13 @@ function init_analytics()
 	}
 }
 
+function add_action_analytics($links)
+{
+	$links[] = "<a href='".admin_url('options-general.php?page=settings_mf_base#settings_analytics')."'>".__("Settings", 'lang_analytics')."</a>";
+
+	return $links;
+}
+
 function settings_analytics()
 {
 	$options_page = "settings_mf_base";
@@ -46,8 +53,7 @@ function settings_analytics()
 
 function settings_analytics_callback()
 {
-	echo "<div id='settings_analytics'>&nbsp;</div>
-	<a href='#settings_analytics'><h3>".__("Analytics", 'lang_analytics')."</h3></a>";
+	echo settings_header('settings_analytics', __("Analytics", 'lang_analytics'));
 }
 
 function setting_analytics_google_callback()
@@ -62,9 +68,9 @@ function setting_analytics_google_callback()
 	$tracking_example = "UA-0000000-0";
 
 	echo "<label>
-		<input type='text' name='setting_analytics_google' value='".$option."' placeholder='".$tracking_example."...'>"
-		."<span class='description'>".__("Login to your account and find the tracking code looking like", 'lang_analytics')." ".$tracking_example."</span>"
-	."</label>";
+		<input type='text' name='setting_analytics_google' value='".$option."' placeholder='".$tracking_example."...'><br>
+		<span class='description'>".__("Login to your account and find the tracking code looking like", 'lang_analytics')." ".$tracking_example."</span>
+	</label>";
 }
 
 function setting_analytics_clicky_callback()
@@ -85,7 +91,7 @@ function setting_analytics_save_admin_stats_callback()
 
 	echo "<label>
 		<input type='checkbox' name='setting_analytics_save_admin_stats' value='1' ".checked(1, $option, false).">
-		<br><span class='description'>".__("Check if you would like to save admin statistics", 'lang_analytics')."</span>
+		<span class='description'>".__("Check if you would like to save admin statistics", 'lang_analytics')."</span>
 	</label>";
 }
 
@@ -113,7 +119,11 @@ function footer_analytics()
 		echo "<script src='//google-analytics.com/ga.js'></script>
 		<script>
 			_uacct = '".$setting_analytics_google."';
-			urchinTracker();
+			
+			try
+			{
+				urchinTracker();
+		    }catch(err){}
 		</script>";
 	}
 
