@@ -1,11 +1,15 @@
 <?php
 /*
 Plugin Name: MF Analytics
-Plugin URI: http://github.com/frostkom/mf_analytics
+Plugin URI: https://github.com/frostkom/mf_analytics
 Description: 
-Version: 1.3.0
+Version: 2.0.3
 Author: Martin Fors
 Author URI: http://frostkom.se
+Text Domain: lang_analytics
+Domain Path: /lang
+
+GitHub Plugin URI: frostkom/mf_analytics
 */
 
 include_once("include/functions.php");

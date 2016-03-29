@@ -20,15 +20,21 @@ function init_analytics()
 
 function settings_analytics()
 {
-	$options_area = "settings_analytics";
+	$options_area = __FUNCTION__;
 
 	add_settings_section($options_area, "", $options_area."_callback", BASE_OPTIONS_PAGE);
 
 	$arr_settings = array(
 		"setting_analytics_google" => __("Google", 'lang_analytics'),
-		"setting_analytics_clicky" => __("Clicky", 'lang_analytics'),
-		"setting_analytics_save_admin_stats" => __("Save admin statistics", 'lang_analytics'),
 	);
+
+	if(get_option('setting_analytics_google') != '')
+	{
+		$arr_settings["setting_analytics_save_admin_stats"] = __("Save admin statistics", 'lang_analytics');
+		$arr_settings["setting_analytics_event_tracking"] = __("Track events", 'lang_analytics');
+	}
+
+	$arr_settings["setting_analytics_clicky"] = __("Clicky", 'lang_analytics');
 
 	foreach($arr_settings as $handle => $text)
 	{
@@ -47,41 +53,36 @@ function settings_analytics_callback()
 
 function setting_analytics_google_callback()
 {
-	$option = get_option('setting_analytics_google');
-
-	if($option == '')
-	{
-		$option = get_option('web_property_id');
-	}
+	$setting_key = get_setting_key(__FUNCTION__);
+	$option = get_option($setting_key);
 
 	$tracking_example = "UA-0000000-0";
 
-	echo "<label>
-		<input type='text' name='setting_analytics_google' value='".$option."' placeholder='".$tracking_example."...'>
-		<p class='description'>".__("Login to your account and find the tracking code looking like", 'lang_analytics')." ".$tracking_example."</p>
-	</label>";
-}
-
-function setting_analytics_clicky_callback()
-{
-	$option = get_option('setting_analytics_clicky');
-
-	//$tracking_example = "UA-0000000-0";
-
-	echo "<label>
-		<input type='text' name='setting_analytics_clicky' value='".$option."'>" // placeholder='".$tracking_example."...'
-		//."<p class='description'>".__("Login to your account and find the tracking code looking like", 'lang_analytics')." ".$tracking_example."</p>"
-	."</label>";
+	echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => $tracking_example, 'description' => __("Login to your account and find the tracking code looking like", 'lang_analytics')." ".$tracking_example));
 }
 
 function setting_analytics_save_admin_stats_callback()
 {
-	$option = get_option('setting_analytics_save_admin_stats');
+	$setting_key = get_setting_key(__FUNCTION__);
+	$option = get_option($setting_key);
 
-	echo "<label>
-		<input type='checkbox' name='setting_analytics_save_admin_stats' value='1' ".checked(1, $option, false).">
-		<p class='description'>".__("Check if you would like to save admin statistics", 'lang_analytics')."</p>
-	</label>";
+	echo show_select(array('data' => get_yes_no_for_select(array('return_integer' => true)), 'name' => $setting_key, 'compare' => $option, 'description' => __("Check if you would like to save admin statistics", 'lang_analytics')));
+}
+
+function setting_analytics_event_tracking_callback()
+{
+	$setting_key = get_setting_key(__FUNCTION__);
+	$option = get_option($setting_key);
+
+	echo show_textarea(array('name' => $setting_key, 'value' => $option, 'xtra' => "class='widefat'", 'placeholder' => __("Outbound Links", 'lang_analytics')."|.phone a, .url a"));
+}
+
+function setting_analytics_clicky_callback()
+{
+	$setting_key = get_setting_key(__FUNCTION__);
+	$option = get_option($setting_key);
+
+	echo show_textfield(array('name' => $setting_key, 'value' => $option));
 }
 
 function footer_analytics()
@@ -92,6 +93,38 @@ function footer_analytics()
 	if($setting_analytics_google != '')
 	{
 		echo "<script>
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', '".$setting_analytics_google."', 'auto');
+			ga('send', 'pageview');
+		</script>
+		<script async src='https://google-analytics.com/analytics.js'></script>"; //www.
+
+		$option = get_option('setting_analytics_event_tracking');
+
+		if($option != '')
+		{
+			$arr_events = array();
+
+			foreach(explode("\n", $option) as $event)
+			{
+				if(strpos($event, "|"))
+				{
+					list($event_title, $event_selector) = explode("|", $event);
+
+					if($event_title != '' && $event_selector != '')
+					{
+						$arr_events[] = array('title' => $event_title, 'selector' => $event_selector);
+					}
+				}
+			}
+
+			if(count($arr_events) > 0)
+			{
+				mf_enqueue_script('script_analytics', plugin_dir_url(__FILE__)."script_analytics.js", array('events' => $arr_events));
+			}
+		}
+
+		/*echo "<script>
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', '".$setting_analytics_google."']);
 			_gaq.push(['_trackPageview']);
@@ -100,7 +133,7 @@ function footer_analytics()
 			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
-		</script>";
+		</script>";*/
 
 		/*echo "<script src='//google-analytics.com/ga.js'></script>
 		<script>
