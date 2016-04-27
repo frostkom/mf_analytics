@@ -123,27 +123,6 @@ function footer_analytics()
 				mf_enqueue_script('script_analytics', plugin_dir_url(__FILE__)."script_analytics.js", array('events' => $arr_events));
 			}
 		}
-
-		/*echo "<script>
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', '".$setting_analytics_google."']);
-			_gaq.push(['_trackPageview']);
-			(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
-		</script>";*/
-
-		/*echo "<script src='//google-analytics.com/ga.js'></script>
-		<script>
-			_uacct = '".$setting_analytics_google."';
-			
-			try
-			{
-				urchinTracker();
-		    }catch(err){}
-		</script>";*/
 	}
 
 	if($setting_analytics_clicky != '')
