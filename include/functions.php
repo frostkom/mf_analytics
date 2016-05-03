@@ -24,17 +24,26 @@ function settings_analytics()
 
 	add_settings_section($options_area, "", $options_area."_callback", BASE_OPTIONS_PAGE);
 
-	$arr_settings = array(
-		"setting_analytics_google" => __("Google", 'lang_analytics'),
-	);
+	$setting_analytics_google = get_option('setting_analytics_google');
+	$setting_analytics_clicky = get_option('setting_analytics_clicky');
 
-	if(get_option('setting_analytics_google') != '')
+	$arr_settings = array();
+
+	if($setting_analytics_clicky == '')
 	{
-		$arr_settings["setting_analytics_save_admin_stats"] = __("Save admin statistics", 'lang_analytics');
-		$arr_settings["setting_analytics_event_tracking"] = __("Track events", 'lang_analytics');
+		$arr_settings["setting_analytics_google"] = __("Google", 'lang_analytics');
+
+		if($setting_analytics_google != '')
+		{
+			$arr_settings["setting_analytics_save_admin_stats"] = __("Save admin statistics", 'lang_analytics');
+			$arr_settings["setting_analytics_event_tracking"] = __("Track events", 'lang_analytics');
+		}
 	}
 
-	$arr_settings["setting_analytics_clicky"] = __("Clicky", 'lang_analytics');
+	if($setting_analytics_google == '')
+	{
+		$arr_settings["setting_analytics_clicky"] = __("Clicky", 'lang_analytics');
+	}
 
 	foreach($arr_settings as $handle => $text)
 	{
