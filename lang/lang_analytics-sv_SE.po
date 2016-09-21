@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-27 15:33+0100\n"
+"POT-Creation-Date: 2016-09-10 16:51+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -15,35 +15,35 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../include/functions.php:28
+#: ../include/functions.php:34
 msgid "Google"
 msgstr ""
 
-#: ../include/functions.php:33
+#: ../include/functions.php:38
 msgid "Save admin statistics"
 msgstr "Spara statistik i admin"
 
-#: ../include/functions.php:34
+#: ../include/functions.php:39
 msgid "Track events"
 msgstr "Spåra händelser"
 
-#: ../include/functions.php:37
+#: ../include/functions.php:45
 msgid "Clicky"
 msgstr ""
 
-#: ../include/functions.php:51
+#: ../include/functions.php:60
 msgid "Analytics"
 msgstr "Statistik"
 
-#: ../include/functions.php:61
+#: ../include/functions.php:70
 msgid "Login to your account and find the tracking code looking like"
 msgstr "Logga in på ditt konto och leta upp sk. \"tracking code\" som ser ut som"
 
-#: ../include/functions.php:69
+#: ../include/functions.php:78
 msgid "Check if you would like to save admin statistics"
 msgstr "Kryssa i om du vill spara statistik i administrationsgränssnittet"
 
-#: ../include/functions.php:77
+#: ../include/functions.php:86
 msgid "Outbound Links"
 msgstr "Utgående länkar"
 
