@@ -31,18 +31,18 @@ function settings_analytics()
 
 	if($setting_analytics_clicky == '')
 	{
-		$arr_settings["setting_analytics_google"] = __("Google", 'lang_analytics');
+		$arr_settings['setting_analytics_google'] = __("Google", 'lang_analytics');
 
 		if($setting_analytics_google != '')
 		{
-			$arr_settings["setting_analytics_save_admin_stats"] = __("Save admin statistics", 'lang_analytics');
-			$arr_settings["setting_analytics_event_tracking"] = __("Track events", 'lang_analytics');
+			$arr_settings['setting_analytics_save_admin_stats'] = __("Save admin statistics", 'lang_analytics');
+			$arr_settings['setting_analytics_event_tracking'] = __("Track events", 'lang_analytics');
 		}
 	}
 
 	if($setting_analytics_google == '')
 	{
-		$arr_settings["setting_analytics_clicky"] = __("Clicky", 'lang_analytics');
+		$arr_settings['setting_analytics_clicky'] = __("Clicky", 'lang_analytics');
 	}
 
 	foreach($arr_settings as $handle => $text)
