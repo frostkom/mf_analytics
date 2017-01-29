@@ -106,7 +106,7 @@ function footer_analytics()
 			ga('create', '".$setting_analytics_google."', 'auto');
 			ga('send', 'pageview');
 		</script>
-		<script async src='https://google-analytics.com/analytics.js'></script>"; //www.
+		<script async src='https://google-analytics.com/analytics.js'></script>";
 
 		$option = get_option('setting_analytics_event_tracking');
 
