@@ -14,7 +14,7 @@ jQuery(function($)
 
 	$.each(script_analytics.events, function(index, value)
 	{
-		$('body').on('click', value.selector, function(e)
+		$(document).on('click', value.selector, function(e)
 		{
 			e.preventDefault();
 
