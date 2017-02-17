@@ -75,7 +75,7 @@ function setting_analytics_save_admin_stats_callback()
 	$setting_key = get_setting_key(__FUNCTION__);
 	$option = get_option($setting_key);
 
-	echo show_select(array('data' => get_yes_no_for_select(array('return_integer' => true)), 'name' => $setting_key, 'value' => $option, 'description' => __("Check if you would like to save admin statistics", 'lang_analytics')));
+	echo show_select(array('data' => get_yes_no_for_select(array('return_integer' => true)), 'name' => $setting_key, 'value' => $option, 'suffix' => __("Check if you would like to save admin statistics", 'lang_analytics')));
 }
 
 function setting_analytics_event_tracking_callback()
