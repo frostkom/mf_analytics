@@ -45,12 +45,7 @@ function settings_analytics()
 		$arr_settings['setting_analytics_clicky'] = __("Clicky", 'lang_analytics');
 	}
 
-	foreach($arr_settings as $handle => $text)
-	{
-		add_settings_field($handle, $text, $handle."_callback", BASE_OPTIONS_PAGE, $options_area);
-
-		register_setting(BASE_OPTIONS_PAGE, $handle);
-	}
+	show_settings_fields(array('area' => $options_area, 'settings' => $arr_settings));
 }
 
 function settings_analytics_callback()
