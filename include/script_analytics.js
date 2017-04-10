@@ -1,6 +1,7 @@
 jQuery(function($)
 {
-	var dom_href = '';
+	var dom_href = '',
+		dom_obj;
 
 	function use_link()
 	{
@@ -12,23 +13,50 @@ jQuery(function($)
 		}
 	}
 
+	function submit_form()
+	{
+		dom_obj.parents('form').submit();
+	}
+
 	$.each(script_analytics.events, function(index, value)
 	{
 		$(document).on('click', value.selector, function(e)
 		{
 			e.preventDefault();
 
-			dom_href = e.target.href;
+			dom_obj = $(this);
 
-			setTimeout(use_link, 1000);
-
-			ga('send', 'event',
+			if($(this).is('a'))
 			{
-				eventCategory: value.title,
-				eventAction: 'click',
-				eventLabel: e.target.href,
-				hitCallback: use_link
-			});
+				dom_label = e.target.href;
+				dom_href = e.target.href;
+
+				setTimeout(use_link, 1000);
+
+				ga('send', 'event',
+				{
+					eventCategory: value.title,
+					eventAction: 'click',
+					eventLabel: dom_label,
+					hitCallback: use_link
+				});
+			}
+
+			else if($(this).is('button'))
+			{
+				dom_label = $(this).attr('rel');
+				dom_href = '';
+
+				setTimeout(submit_form, 1000);
+
+				ga('send', 'event',
+				{
+					eventCategory: value.title,
+					eventAction: 'click',
+					eventLabel: dom_label,
+					hitCallback: submit_form
+				});
+			}
 		});
 	});
 });
