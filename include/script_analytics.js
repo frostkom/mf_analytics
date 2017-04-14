@@ -7,7 +7,15 @@ jQuery(function($)
 	{
 		if(dom_href != '')
 		{
-			location.href = dom_href;
+			if(dom_obj.attr('rel') == 'external' && script_analytics.external_links == 'yes')
+			{
+				//Do nothing
+			}
+
+			else
+			{
+				location.href = dom_href;
+			}
 
 			dom_href = '';
 		}
@@ -16,13 +24,15 @@ jQuery(function($)
 	function submit_form()
 	{
 		dom_obj.parents('form').submit();
+
+		clearTimeout(analytics_timeout);
 	}
 
 	$.each(script_analytics.events, function(index, value)
 	{
 		$(document).on('click', value.selector, function(e)
 		{
-			e.preventDefault();
+			//e.preventDefault();
 
 			dom_obj = $(this);
 
@@ -40,6 +50,8 @@ jQuery(function($)
 					eventLabel: dom_label,
 					hitCallback: use_link
 				});
+
+				return false;
 			}
 
 			else if($(this).is('button'))
@@ -56,6 +68,8 @@ jQuery(function($)
 					eventLabel: dom_label,
 					hitCallback: submit_form
 				});
+
+				return false;
 			}
 		});
 	});
