@@ -124,7 +124,7 @@ function footer_analytics()
 
 			if(count($arr_events) > 0)
 			{
-				mf_enqueue_script('script_analytics', plugin_dir_url(__FILE__)."script_analytics.js", array('events' => $arr_events, 'external_links' => get_option('setting_base_external_links', 'yes')));
+				mf_enqueue_script('script_analytics', plugin_dir_url(__FILE__)."script_analytics.js", array('events' => $arr_events, 'external_links' => get_option('setting_base_external_links', 'yes')), get_plugin_version(__FILE__));
 			}
 		}
 	}
