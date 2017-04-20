@@ -78,7 +78,7 @@ function setting_analytics_event_tracking_callback()
 	$setting_key = get_setting_key(__FUNCTION__);
 	$option = get_option($setting_key);
 
-	echo show_textarea(array('name' => $setting_key, 'value' => $option, 'xtra' => "class='widefat'", 'placeholder' => __("Outbound Links", 'lang_analytics')."|.phone a, .url a"));
+	echo show_textarea(array('name' => $setting_key, 'value' => $option, 'placeholder' => __("Outbound Links", 'lang_analytics')."|.phone a, .url a"));
 }
 
 function setting_analytics_clicky_callback()
