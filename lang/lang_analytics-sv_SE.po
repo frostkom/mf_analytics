@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-03 09:25+0100\n"
+"POT-Creation-Date: 2017-05-22 10:50+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -31,19 +31,19 @@ msgstr "Spåra händelser"
 msgid "Clicky"
 msgstr ""
 
-#: ../include/functions.php:60
+#: ../include/functions.php:55
 msgid "Analytics"
 msgstr "Statistik"
 
-#: ../include/functions.php:68
+#: ../include/functions.php:63
 msgid "Get yours here"
 msgstr "Hämta din här"
 
-#: ../include/functions.php:78
+#: ../include/functions.php:73
 msgid "Check if you would like to save admin statistics"
 msgstr "Kryssa i om du vill spara statistik i administrationsgränssnittet"
 
-#: ../include/functions.php:86
+#: ../include/functions.php:81
 msgid "Outbound Links"
 msgstr "Utgående länkar"
 

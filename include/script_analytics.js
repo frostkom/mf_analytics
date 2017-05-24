@@ -7,10 +7,7 @@ jQuery(function($)
 	{
 		if(dom_href != '')
 		{
-			if(dom_obj.attr('rel') == 'external' && script_analytics.external_links == 'yes')
-			{
-				//Do nothing
-			}
+			if(dom_obj.attr('rel') == 'external' && script_analytics.external_links == 'yes'){}
 
 			else
 			{
@@ -32,7 +29,7 @@ jQuery(function($)
 	{
 		$(document).on('click', value.selector, function(e)
 		{
-			//e.preventDefault();
+			/*e.preventDefault();*/
 
 			dom_obj = $(this);
 
