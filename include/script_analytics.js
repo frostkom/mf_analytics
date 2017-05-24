@@ -21,8 +21,6 @@ jQuery(function($)
 	function submit_form()
 	{
 		dom_obj.parents('form').submit();
-
-		clearTimeout(analytics_timeout);
 	}
 
 	$.each(script_analytics.events, function(index, value)
