@@ -11,7 +11,15 @@ jQuery(function($)
 
 			else
 			{
-				location.href = dom_href;
+				if(typeof process_url == 'function')
+				{
+					process_url(dom_href);
+				}
+
+				else
+				{
+					location.href = dom_href;
+				}
 			}
 
 			dom_href = '';
