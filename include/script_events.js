@@ -7,7 +7,7 @@ jQuery(function($)
 	{
 		if(dom_href != '')
 		{
-			if(dom_obj.attr('rel') == 'external' && script_analytics.external_links == 'yes'){}
+			if(dom_obj.attr('rel') == 'external' && script_analytics_events.external_links == 'yes'){}
 
 			else
 			{
@@ -31,12 +31,10 @@ jQuery(function($)
 		dom_obj.parents('form').submit();
 	}
 
-	$.each(script_analytics.events, function(index, value)
+	$.each(script_analytics_events.events, function(index, value)
 	{
 		$(document).on('click', value.selector, function(e)
 		{
-			/*e.preventDefault();*/
-
 			dom_obj = $(this);
 
 			if($(this).is('a'))

@@ -89,19 +89,25 @@ function setting_analytics_clicky_callback()
 	echo show_textfield(array('name' => $setting_key, 'value' => $option));
 }
 
-function footer_analytics()
+function header_analytics()
 {
 	$setting_analytics_google = get_option('setting_analytics_google');
 	$setting_analytics_clicky = get_option('setting_analytics_clicky');
 
 	if($setting_analytics_google != '')
 	{
-		echo "<script>
+		$plugin_include_url = plugin_dir_url(__FILE__);
+		$plugin_version = get_plugin_version(__FILE__);
+
+		mf_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", $plugin_version);
+		mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google), $plugin_version);
+
+		/*echo "<script>
 			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 			ga('create', '".$setting_analytics_google."', 'auto');
 			ga('send', 'pageview');
 		</script>
-		<script async src='https://google-analytics.com/analytics.js'></script>";
+		<script async src='https://google-analytics.com/analytics.js'></script>";*/
 
 		$option = get_option('setting_analytics_event_tracking');
 
@@ -124,14 +130,14 @@ function footer_analytics()
 
 			if(count($arr_events) > 0)
 			{
-				mf_enqueue_script('script_analytics', plugin_dir_url(__FILE__)."script_analytics.js", array('events' => $arr_events, 'external_links' => get_option('setting_base_external_links', 'yes')), get_plugin_version(__FILE__));
+				mf_enqueue_script('script_analytics_events', $plugin_include_url."script_events.js", array('events' => $arr_events, 'external_links' => get_option('setting_base_external_links', 'yes')), $plugin_version);
 			}
 		}
 	}
 
 	if($setting_analytics_clicky != '')
 	{
-		echo "<script src='//static.getclicky.com/js'></script>
-		<script>clicky.init(".$setting_analytics_clicky.");</script>";
+		mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
+		mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky), $plugin_version);
 	}
 }

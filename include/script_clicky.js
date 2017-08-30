@@ -1,0 +1,1 @@
+clicky.init(script_analytics_clicky.api_key);
