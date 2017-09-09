@@ -8,13 +8,13 @@ function init_analytics()
 	{
 		if(is_user_logged_in())
 		{
-			add_filter('admin_footer_text', 'footer_analytics');
+			add_filter('admin_footer_text', 'header_analytics');
 		}
 
-		else
+		/*else
 		{
-			add_filter('login_footer', 'footer_analytics');
-		}
+			add_filter('login_footer', 'header_analytics');
+		}*/
 	}
 }
 
