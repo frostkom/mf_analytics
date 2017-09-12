@@ -123,7 +123,7 @@ function header_analytics()
 
 					if($event_title != '' && $event_selector != '')
 					{
-						$arr_events[] = array('title' => $event_title, 'selector' => $event_selector);
+						$arr_events[] = array('title' => $event_title, 'selector' => trim($event_selector));
 					}
 				}
 			}
