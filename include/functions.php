@@ -60,9 +60,9 @@ function setting_analytics_google_callback()
 	$setting_key = get_setting_key(__FUNCTION__);
 	$option = get_option($setting_key);
 
-	$description = ($option == '' ? "<a href='//analytics.google.com/analytics/web/' rel='external'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+	$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/' rel='external'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
-	echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $description));
+	echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $suffix));
 }
 
 function setting_analytics_save_admin_stats_callback()
