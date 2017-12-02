@@ -7,7 +7,7 @@ jQuery(function($)
 	{
 		if(dom_href != '')
 		{
-			if(dom_obj.attr('rel') == 'external' && script_analytics_events.external_links == 'yes'){}
+			if(dom_obj.attr('rel') == 'external'){}
 
 			else
 			{

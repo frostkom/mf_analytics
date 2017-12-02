@@ -60,7 +60,7 @@ function setting_analytics_google_callback()
 	$setting_key = get_setting_key(__FUNCTION__);
 	$option = get_option($setting_key);
 
-	$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/' rel='external'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+	$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
 	echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $suffix));
 }
@@ -130,7 +130,7 @@ function header_analytics()
 
 			if(count($arr_events) > 0)
 			{
-				mf_enqueue_script('script_analytics_events', $plugin_include_url."script_events.js", array('events' => $arr_events, 'external_links' => get_option('setting_base_external_links', 'yes')), $plugin_version);
+				mf_enqueue_script('script_analytics_events', $plugin_include_url."script_events.js", array('events' => $arr_events), $plugin_version);
 			}
 		}
 	}
