@@ -7,20 +7,7 @@ jQuery(function($)
 	{
 		if(dom_href != '')
 		{
-			if(dom_obj.attr('rel') == 'external'){}
-
-			else
-			{
-				if(typeof process_url == 'function')
-				{
-					process_url(dom_href);
-				}
-
-				else
-				{
-					location.href = dom_href;
-				}
-			}
+			location.href = dom_href;
 
 			dom_href = '';
 		}
@@ -37,27 +24,30 @@ jQuery(function($)
 		{
 			dom_obj = $(this);
 
-			if($(this).is('a'))
+			if(dom_obj.is('a'))
 			{
-				dom_label = e.target.href;
-				dom_href = e.target.href;
+				dom_label = dom_obj.attr('href');
+				dom_href = dom_obj.attr('href');
 
-				setTimeout(use_link, 1000);
-
-				ga('send', 'event',
+				if(typeof dom_href != 'undefined')
 				{
-					eventCategory: value.title,
-					eventAction: 'click',
-					eventLabel: dom_label,
-					hitCallback: use_link
-				});
+					setTimeout(use_link, 1000);
 
-				return false;
+					ga('send', 'event',
+					{
+						eventCategory: value.title,
+						eventAction: 'click',
+						eventLabel: dom_label,
+						hitCallback: use_link
+					});
+
+					return false;
+				}
 			}
 
-			else if($(this).is('button'))
+			else if(dom_obj.is('button'))
 			{
-				dom_label = $(this).attr('rel');
+				dom_label = dom_obj.attr('rel');
 				dom_href = '';
 
 				setTimeout(submit_form, 1000);
