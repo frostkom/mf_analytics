@@ -79,6 +79,15 @@ function setting_analytics_event_tracking_callback()
 	$option = get_option($setting_key);
 
 	echo show_textarea(array('name' => $setting_key, 'value' => $option, 'placeholder' => __("Outbound Links", 'lang_analytics')."|.phone a, .url a"));
+
+	if($option != '')
+	{
+		echo "<ol>
+			<li>".sprintf(__("Log in to your account at %s", 'lang_analytics'), "<a href='//analytics.google.com'>Analytics</a>")."</li>
+			<li>".__("Choose this website if you have more than one connected", 'lang_analytics')."</li>
+			<li>".__("Go to Content -> Events -> Overview", 'lang_analytics')."</li>
+		</ol>";
+	}
 }
 
 function setting_analytics_clicky_callback()

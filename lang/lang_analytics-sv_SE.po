@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-12 07:29+0100\n"
+"POT-Creation-Date: 2018-01-15 09:19+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -42,4 +42,17 @@ msgstr "Hämta din här"
 #: ../include/functions.php:81
 msgid "Outbound Links"
 msgstr "Utgående länkar"
+
+#: ../include/functions.php:86
+#, php-format
+msgid "Log in to your account at %s"
+msgstr "Logga in på ditt konto på %s"
+
+#: ../include/functions.php:87
+msgid "Choose this website if you have more than one connected"
+msgstr "Välj denna webbplats om du har fler än en kopplad"
+
+#: ../include/functions.php:88
+msgid "Go to Content -> Events -> Overview"
+msgstr "Gå till Beteende -> Händelser -> Översikt"
 
