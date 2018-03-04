@@ -29,21 +29,16 @@ function settings_analytics()
 
 	$arr_settings = array();
 
-	if($setting_analytics_clicky == '')
-	{
-		$arr_settings['setting_analytics_google'] = __("Google", 'lang_analytics');
+	$arr_settings['setting_analytics_google'] = __("Google", 'lang_analytics');
 
-		if($setting_analytics_google != '')
-		{
-			$arr_settings['setting_analytics_save_admin_stats'] = __("Save admin statistics", 'lang_analytics');
-			$arr_settings['setting_analytics_event_tracking'] = __("Track events", 'lang_analytics');
-		}
+	if($setting_analytics_google != '')
+	{
+		$arr_settings['setting_analytics_save_admin_stats'] = __("Save admin statistics", 'lang_analytics');
+		$arr_settings['setting_analytics_event_tracking'] = __("Track events", 'lang_analytics');
 	}
 
-	if($setting_analytics_google == '')
-	{
-		$arr_settings['setting_analytics_clicky'] = __("Clicky", 'lang_analytics');
-	}
+	$arr_settings['setting_analytics_clicky'] = __("Clicky", 'lang_analytics');
+	$arr_settings['setting_analytics_fullstory'] = __("FullStory", 'lang_analytics');
 
 	show_settings_fields(array('area' => $options_area, 'settings' => $arr_settings));
 }
@@ -98,10 +93,19 @@ function setting_analytics_clicky_callback()
 	echo show_textfield(array('name' => $setting_key, 'value' => $option));
 }
 
+function setting_analytics_fullstory_callback()
+{
+	$setting_key = get_setting_key(__FUNCTION__);
+	$option = get_option($setting_key);
+
+	echo show_textfield(array('name' => $setting_key, 'value' => $option));
+}
+
 function header_analytics()
 {
 	$setting_analytics_google = get_option('setting_analytics_google');
 	$setting_analytics_clicky = get_option('setting_analytics_clicky');
+	$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
 
 	if($setting_analytics_google != '')
 	{
@@ -148,5 +152,10 @@ function header_analytics()
 	{
 		mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
 		mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky), $plugin_version);
+	}
+	
+	if($setting_analytics_fullstory != '')
+	{
+		mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory), $plugin_version);
 	}
 }

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 09:19+0100\n"
+"POT-Creation-Date: 2018-03-04 08:37+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -15,44 +15,48 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../include/functions.php:34
+#: ../include/functions.php:32
 msgid "Google"
 msgstr ""
 
-#: ../include/functions.php:38
+#: ../include/functions.php:36
 msgid "Save admin statistics"
 msgstr "Spara statistik i admin"
 
-#: ../include/functions.php:39
+#: ../include/functions.php:37
 msgid "Track events"
 msgstr "Spåra händelser"
 
-#: ../include/functions.php:45
+#: ../include/functions.php:40
 msgid "Clicky"
 msgstr ""
 
-#: ../include/functions.php:55
+#: ../include/functions.php:41
+msgid "FullStory"
+msgstr ""
+
+#: ../include/functions.php:50
 msgid "Analytics"
 msgstr "Statistik"
 
-#: ../include/functions.php:63
+#: ../include/functions.php:58
 msgid "Get yours here"
 msgstr "Hämta din här"
 
-#: ../include/functions.php:81
+#: ../include/functions.php:76
 msgid "Outbound Links"
 msgstr "Utgående länkar"
 
-#: ../include/functions.php:86
+#: ../include/functions.php:81
 #, php-format
 msgid "Log in to your account at %s"
 msgstr "Logga in på ditt konto på %s"
 
-#: ../include/functions.php:87
+#: ../include/functions.php:82
 msgid "Choose this website if you have more than one connected"
 msgstr "Välj denna webbplats om du har fler än en kopplad"
 
-#: ../include/functions.php:88
+#: ../include/functions.php:83
 msgid "Go to Content -> Events -> Overview"
 msgstr "Gå till Beteende -> Händelser -> Översikt"
 
