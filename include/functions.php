@@ -153,7 +153,7 @@ function header_analytics()
 		mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
 		mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky), $plugin_version);
 	}
-	
+
 	if($setting_analytics_fullstory != '')
 	{
 		mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory), $plugin_version);
