@@ -3,7 +3,7 @@
 Plugin Name: MF Analytics
 Plugin URI: https://github.com/frostkom/mf_analytics
 Description: 
-Version: 2.4.1
+Version: 2.4.2
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: http://frostkom.se
@@ -14,7 +14,10 @@ Depends: MF Base
 GitHub Plugin URI: frostkom/mf_analytics
 */
 
+include_once("include/classes.php");
 include_once("include/functions.php");
+
+$obj_analytics = new mf_analytics();
 
 add_action('init', 'init_analytics');
 
@@ -29,7 +32,7 @@ if(is_admin())
 
 else
 {
-	add_action('get_header', 'header_analytics');
+	add_action('wp_head', array($obj_analytics, 'wp_head'));
 }
 
 function uninstall_analytics()
