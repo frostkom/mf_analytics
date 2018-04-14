@@ -3,7 +3,7 @@
 Plugin Name: MF Analytics
 Plugin URI: https://github.com/frostkom/mf_analytics
 Description: 
-Version: 2.4.2
+Version: 2.4.3
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: http://frostkom.se
@@ -32,7 +32,7 @@ if(is_admin())
 
 else
 {
-	add_action('wp_head', array($obj_analytics, 'wp_head'));
+	add_action('wp_head', array($obj_analytics, 'wp_head'), 0);
 }
 
 function uninstall_analytics()
