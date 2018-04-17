@@ -7,6 +7,97 @@ class mf_analytics
 
 	}
 
+	function settings_analytics()
+	{
+		$options_area = __FUNCTION__;
+
+		add_settings_section($options_area, "", array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
+
+		$setting_analytics_google = get_option('setting_analytics_google');
+		$setting_analytics_clicky = get_option('setting_analytics_clicky');
+
+		$arr_settings = array();
+
+		$arr_settings['setting_analytics_google'] = __("Google", 'lang_analytics');
+
+		if($setting_analytics_google != '')
+		{
+			$arr_settings['setting_analytics_save_admin_stats'] = __("Save admin statistics", 'lang_analytics');
+			$arr_settings['setting_analytics_event_tracking'] = __("Track events", 'lang_analytics');
+		}
+
+		$arr_settings['setting_analytics_clicky'] = __("Clicky", 'lang_analytics');
+		$arr_settings['setting_analytics_fullstory'] = __("FullStory", 'lang_analytics');
+
+		show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
+	}
+
+	function settings_analytics_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+
+		echo settings_header($setting_key, __("Analytics", 'lang_analytics'));
+	}
+
+	function setting_analytics_google_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $suffix));
+	}
+
+	function setting_analytics_save_admin_stats_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		echo show_select(array('data' => get_yes_no_for_select(array('return_integer' => true)), 'name' => $setting_key, 'value' => $option));
+	}
+
+	function setting_analytics_event_tracking_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		echo show_textarea(array('name' => $setting_key, 'value' => $option, 'placeholder' => __("Outbound Links", 'lang_analytics')."|.phone a, .url a"));
+
+		if($option != '')
+		{
+			echo "<ol>
+				<li>".sprintf(__("Log in to your account at %s", 'lang_analytics'), "<a href='//analytics.google.com'>Analytics</a>")."</li>
+				<li>".__("Choose this website if you have more than one connected", 'lang_analytics')."</li>
+				<li>".__("Go to Content -> Events -> Overview", 'lang_analytics')."</li>
+			</ol>";
+		}
+	}
+
+	function setting_analytics_clicky_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		echo show_textfield(array('name' => $setting_key, 'value' => $option));
+	}
+
+	function setting_analytics_fullstory_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		echo show_textfield(array('name' => $setting_key, 'value' => $option));
+	}
+
+	function admin_init()
+	{
+		if(get_option('setting_analytics_save_admin_stats') && is_user_logged_in())
+		{
+			$this->wp_head();
+		}
+	}
+
 	function wp_head()
 	{
 		$setting_analytics_google = get_option('setting_analytics_google');
