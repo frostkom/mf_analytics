@@ -13,19 +13,16 @@ class mf_analytics
 
 		add_settings_section($options_area, "", array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
 
-		$setting_analytics_google = get_option('setting_analytics_google');
-		$setting_analytics_clicky = get_option('setting_analytics_clicky');
-
 		$arr_settings = array();
+		$arr_settings['setting_analytics_google'] = __("Google Analytics", 'lang_analytics');
 
-		$arr_settings['setting_analytics_google'] = __("Google", 'lang_analytics');
-
-		if($setting_analytics_google != '')
+		if(get_option('setting_analytics_google') != '')
 		{
 			$arr_settings['setting_analytics_save_admin_stats'] = __("Save admin statistics", 'lang_analytics');
 			$arr_settings['setting_analytics_event_tracking'] = __("Track events", 'lang_analytics');
 		}
 
+		$arr_settings['setting_analytics_tag_manager'] = __("Google Tag Manager", 'lang_analytics');
 		$arr_settings['setting_analytics_clicky'] = __("Clicky", 'lang_analytics');
 		$arr_settings['setting_analytics_fullstory'] = __("FullStory", 'lang_analytics');
 
@@ -44,9 +41,19 @@ class mf_analytics
 		$setting_key = get_setting_key(__FUNCTION__);
 		$option = get_option($setting_key);
 
-		$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+		$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/'>".__("Get Yours Here", 'lang_analytics')."</a>" : "");
 
 		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $suffix));
+	}
+
+	function setting_analytics_tag_manager_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		$suffix = ($option == '' ? "<a href='//google.com/analytics/tag-manager/'>".__("Get Yours Here", 'lang_analytics')."</a>" : "");
+
+		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "GTM-00000", 'suffix' => $suffix));
 	}
 
 	function setting_analytics_save_admin_stats_callback()
@@ -105,15 +112,16 @@ class mf_analytics
 	function wp_head()
 	{
 		$setting_analytics_google = get_option('setting_analytics_google');
+		$setting_analytics_tag_manager = get_option('setting_analytics_tag_manager');
 		$setting_analytics_clicky = get_option('setting_analytics_clicky');
 		$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
+		
+		$plugin_include_url = plugin_dir_url(__FILE__);
+		$plugin_version = get_plugin_version(__FILE__);
 
 		if($setting_analytics_google != '')
 		{
-			$plugin_include_url = plugin_dir_url(__FILE__);
-			$plugin_version = get_plugin_version(__FILE__);
-
-			mf_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", $plugin_version);
+			wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", $plugin_version);
 			mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google), $plugin_version);
 
 			/*echo "<script>
@@ -147,6 +155,21 @@ class mf_analytics
 					mf_enqueue_script('script_analytics_events', $plugin_include_url."script_events.js", array('events' => $arr_events), $plugin_version);
 				}
 			}
+		}
+
+		if($setting_analytics_tag_manager != '')
+		{
+			wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtag/js?id=".$setting_analytics_tag_manager, $plugin_version);
+			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager), $plugin_version);
+
+			/*echo "<script async src="https://www.googletagmanager.com/gtag/js?id=UA-61039834-1"></script>
+			<script>
+			  window.dataLayer = window.dataLayer || [];
+			  function gtag(){dataLayer.push(arguments);}
+			  gtag('js', new Date());
+
+			  gtag('config', 'UA-61039834-1');
+			</script>";*/
 		}
 
 		if($setting_analytics_clicky != '')

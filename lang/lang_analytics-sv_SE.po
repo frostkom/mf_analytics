@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-04 08:37+0100\n"
+"POT-Creation-Date: 2018-06-20 07:53+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -15,48 +15,58 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../include/functions.php:32
-msgid "Google"
-msgstr ""
+#: ../include/classes.php:17
+msgid "Google Analytics"
+msgstr "Google Analytics"
 
-#: ../include/functions.php:36
+#: ../include/classes.php:21
 msgid "Save admin statistics"
 msgstr "Spara statistik i admin"
 
-#: ../include/functions.php:37
+#: ../include/classes.php:22
 msgid "Track events"
 msgstr "Spåra händelser"
 
-#: ../include/functions.php:40
+#: ../include/classes.php:25
+msgid "Google Tag Manager"
+msgstr "Google Tag Manager"
+
+#: ../include/classes.php:26
 msgid "Clicky"
-msgstr ""
+msgstr "Clicky"
 
-#: ../include/functions.php:41
+#: ../include/classes.php:27
 msgid "FullStory"
-msgstr ""
+msgstr "FullStory"
 
-#: ../include/functions.php:50
+#: ../include/classes.php:36
 msgid "Analytics"
 msgstr "Statistik"
 
-#: ../include/functions.php:58
-msgid "Get yours here"
+#: ../include/classes.php:44
+#: ../include/classes.php:54
+msgid "Get Yours Here"
 msgstr "Hämta din här"
 
-#: ../include/functions.php:76
+#: ../include/classes.php:72
 msgid "Outbound Links"
 msgstr "Utgående länkar"
 
-#: ../include/functions.php:81
+#: ../include/classes.php:77
 #, php-format
 msgid "Log in to your account at %s"
 msgstr "Logga in på ditt konto på %s"
 
-#: ../include/functions.php:82
+#: ../include/classes.php:78
 msgid "Choose this website if you have more than one connected"
 msgstr "Välj denna webbplats om du har fler än en kopplad"
 
-#: ../include/functions.php:83
+#: ../include/classes.php:79
 msgid "Go to Content -> Events -> Overview"
 msgstr "Gå till Beteende -> Händelser -> Översikt"
+
+#: ../include/classes.php:89
+#: ../include/classes.php:99
+msgid "Get yours here"
+msgstr "Hämta din här"
 
