@@ -115,13 +115,13 @@ class mf_analytics
 		$setting_analytics_tag_manager = get_option('setting_analytics_tag_manager');
 		$setting_analytics_clicky = get_option('setting_analytics_clicky');
 		$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
-		
+
 		$plugin_include_url = plugin_dir_url(__FILE__);
 		$plugin_version = get_plugin_version(__FILE__);
 
 		if($setting_analytics_google != '')
 		{
-			wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", $plugin_version);
+			wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", array(), $plugin_version);
 			mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google), $plugin_version);
 
 			/*echo "<script>
@@ -162,13 +162,12 @@ class mf_analytics
 			wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtag/js?id=".$setting_analytics_tag_manager, $plugin_version);
 			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager), $plugin_version);
 
-			/*echo "<script async src="https://www.googletagmanager.com/gtag/js?id=UA-61039834-1"></script>
+			/*echo "<script async src='https://www.googletagmanager.com/gtag/js?id=".$setting_analytics_tag_manager."'></script>
 			<script>
 			  window.dataLayer = window.dataLayer || [];
 			  function gtag(){dataLayer.push(arguments);}
 			  gtag('js', new Date());
-
-			  gtag('config', 'UA-61039834-1');
+			  gtag('config', '".$setting_analytics_tag_manager."');
 			</script>";*/
 		}
 
