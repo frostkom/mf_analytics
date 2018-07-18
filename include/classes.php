@@ -109,6 +109,62 @@ class mf_analytics
 		}
 	}
 
+	function gather_services_used()
+	{
+		$out = "";
+		$arr_services = array();
+
+		if(get_option('setting_analytics_google') != '')
+		{
+			$arr_services[] = __("Google Analytics", 'lang_analytics');
+		}
+
+		if(get_option('setting_analytics_tag_manager') != '')
+		{
+			$arr_services[] = __("Google Tag Manager", 'lang_analytics');
+		}
+
+		if(get_option('setting_analytics_clicky') != '')
+		{
+			$arr_services[] = __("Clicky", 'lang_analytics');
+		}
+
+		if(get_option('setting_analytics_fullstory') != '')
+		{
+			$arr_services[] = __("FullStory", 'lang_analytics');
+		}
+
+		$count_temp = count($arr_services);
+
+		for($i = 0; $i < $count_temp; $i++)
+		{
+			if($out != '')
+			{
+				if($i == ($count_temp - 1))
+				{
+					$out .= " & ";
+				}
+
+				else
+				{
+					$out .= ", ";
+				}
+			}
+
+			$out .= $arr_services[$i];
+		}
+
+		return $out;
+	}
+
+	function add_policy($content)
+	{
+		$content .= "<h3>".__("Analytics", 'lang_analytics')."</h3>"
+		.sprintf(__("We use %s which stores aggregated data regarding your visit on this site to improve our website and evaluate our marketing efforts.", 'lang_analytics'), $this->gather_services_used());
+
+		return $content;
+	}
+
 	function wp_head()
 	{
 		$setting_analytics_google = get_option('setting_analytics_google');

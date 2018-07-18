@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 07:53+0100\n"
+"POT-Creation-Date: 2018-07-18 07:46+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -16,6 +16,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../include/classes.php:17
+#: ../include/classes.php:111
 msgid "Google Analytics"
 msgstr "Google Analytics"
 
@@ -28,18 +29,22 @@ msgid "Track events"
 msgstr "Spåra händelser"
 
 #: ../include/classes.php:25
+#: ../include/classes.php:116
 msgid "Google Tag Manager"
 msgstr "Google Tag Manager"
 
 #: ../include/classes.php:26
+#: ../include/classes.php:121
 msgid "Clicky"
 msgstr "Clicky"
 
 #: ../include/classes.php:27
+#: ../include/classes.php:126
 msgid "FullStory"
 msgstr "FullStory"
 
 #: ../include/classes.php:36
+#: ../include/classes.php:161
 msgid "Analytics"
 msgstr "Statistik"
 
@@ -69,4 +74,9 @@ msgstr "Gå till Beteende -> Händelser -> Översikt"
 #: ../include/classes.php:99
 msgid "Get yours here"
 msgstr "Hämta din här"
+
+#: ../include/classes.php:159
+#, php-format
+msgid "We use %s which stores aggregated data regarding your visit on this site to improve our website and evaluate our marketing efforts."
+msgstr "Vi använder %s som lagrar aggregerad data om ditt besök för att kunna förbättra vår webbplats och utvärdera våra marknadsföringsinsatser."
 
