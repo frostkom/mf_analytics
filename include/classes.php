@@ -159,8 +159,10 @@ class mf_analytics
 
 	function add_policy($content)
 	{
-		$content .= "<h3>".__("Analytics", 'lang_analytics')."</h3>"
-		.sprintf(__("We use %s which stores aggregated data regarding your visit on this site to improve our website and evaluate our marketing efforts.", 'lang_analytics'), $this->gather_services_used());
+		$content .= "<h3>".__("Analytics", 'lang_analytics')."</h3>
+		<p>"
+			.sprintf(__("We use %s which stores aggregated data regarding your visit on this site to improve our website and evaluate our marketing efforts.", 'lang_analytics'), $this->gather_services_used())
+		."</p>";
 
 		return $content;
 	}
