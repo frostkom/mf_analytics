@@ -41,7 +41,7 @@ class mf_analytics
 		$setting_key = get_setting_key(__FUNCTION__);
 		$option = get_option($setting_key);
 
-		$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/'>".__("Get Yours Here", 'lang_analytics')."</a>" : "");
+		$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
 		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $suffix));
 	}
@@ -51,7 +51,7 @@ class mf_analytics
 		$setting_key = get_setting_key(__FUNCTION__);
 		$option = get_option($setting_key);
 
-		$suffix = ($option == '' ? "<a href='//google.com/analytics/tag-manager/'>".__("Get Yours Here", 'lang_analytics')."</a>" : "");
+		$suffix = ($option == '' ? "<a href='//google.com/analytics/tag-manager/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
 		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "GTM-00000", 'suffix' => $suffix));
 	}
