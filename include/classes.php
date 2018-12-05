@@ -2,10 +2,7 @@
 
 class mf_analytics
 {
-	function __construct()
-	{
-
-	}
+	function __construct(){}
 
 	function settings_analytics()
 	{
@@ -14,6 +11,9 @@ class mf_analytics
 		add_settings_section($options_area, "", array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
 
 		$arr_settings = array();
+		$arr_settings['setting_analytics_clicky'] = __("Clicky", 'lang_analytics');
+		$arr_settings['setting_analytics_facebook'] = __("Facebook Pixel", 'lang_analytics');
+		$arr_settings['setting_analytics_fullstory'] = __("FullStory", 'lang_analytics');
 		$arr_settings['setting_analytics_google'] = __("Google Analytics", 'lang_analytics');
 
 		if(get_option('setting_analytics_google') != '')
@@ -23,8 +23,6 @@ class mf_analytics
 		}
 
 		$arr_settings['setting_analytics_tag_manager'] = __("Google Tag Manager", 'lang_analytics');
-		$arr_settings['setting_analytics_clicky'] = __("Clicky", 'lang_analytics');
-		$arr_settings['setting_analytics_fullstory'] = __("FullStory", 'lang_analytics');
 
 		show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
 	}
@@ -34,6 +32,36 @@ class mf_analytics
 		$setting_key = get_setting_key(__FUNCTION__);
 
 		echo settings_header($setting_key, __("Analytics", 'lang_analytics'));
+	}
+
+	function setting_analytics_clicky_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		$suffix = ($option == '' ? "<a href='//clicky.com/user/register'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
+	}
+
+	function setting_analytics_facebook_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		$suffix = ($option == '' ? "<a href='//www.facebook.com/events_manager/pixel/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "1234", 'suffix' => $suffix));
+	}
+
+	function setting_analytics_fullstory_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		$suffix = ($option == '' ? "<a href='//fullstory.com/pricing/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "ABCD", 'suffix' => $suffix));
 	}
 
 	function setting_analytics_google_callback()
@@ -81,26 +109,6 @@ class mf_analytics
 		}
 	}
 
-	function setting_analytics_clicky_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
-
-		$suffix = ($option == '' ? "<a href='//clicky.com/user/register'>".__("Get yours here", 'lang_analytics')."</a>" : "");
-
-		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
-	}
-
-	function setting_analytics_fullstory_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
-
-		$suffix = ($option == '' ? "<a href='//fullstory.com/pricing/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
-
-		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "ABCD", 'suffix' => $suffix));
-	}
-
 	function admin_init()
 	{
 		if(get_option('setting_analytics_save_admin_stats') && is_user_logged_in())
@@ -114,6 +122,21 @@ class mf_analytics
 		$out = "";
 		$arr_services = array();
 
+		if(get_option('setting_analytics_clicky') != '')
+		{
+			$arr_services[] = __("Clicky", 'lang_analytics');
+		}
+
+		if(get_option('setting_analytics_facebook') != '')
+		{
+			$arr_services[] = __("Facebook Pixel", 'lang_analytics');
+		}
+
+		if(get_option('setting_analytics_fullstory') != '')
+		{
+			$arr_services[] = __("FullStory", 'lang_analytics');
+		}
+
 		if(get_option('setting_analytics_google') != '')
 		{
 			$arr_services[] = __("Google Analytics", 'lang_analytics');
@@ -122,16 +145,6 @@ class mf_analytics
 		if(get_option('setting_analytics_tag_manager') != '')
 		{
 			$arr_services[] = __("Google Tag Manager", 'lang_analytics');
-		}
-
-		if(get_option('setting_analytics_clicky') != '')
-		{
-			$arr_services[] = __("Clicky", 'lang_analytics');
-		}
-
-		if(get_option('setting_analytics_fullstory') != '')
-		{
-			$arr_services[] = __("FullStory", 'lang_analytics');
 		}
 
 		$count_temp = count($arr_services);
@@ -174,13 +187,30 @@ class mf_analytics
 
 	function wp_head()
 	{
+		$setting_analytics_clicky = get_option('setting_analytics_clicky');
+		$setting_analytics_facebook = get_option('setting_analytics_facebook');
+		$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
 		$setting_analytics_google = get_option('setting_analytics_google');
 		$setting_analytics_tag_manager = get_option('setting_analytics_tag_manager');
-		$setting_analytics_clicky = get_option('setting_analytics_clicky');
-		$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
 
 		$plugin_include_url = plugin_dir_url(__FILE__);
 		$plugin_version = get_plugin_version(__FILE__);
+
+		if($setting_analytics_clicky != '')
+		{
+			mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
+			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky), $plugin_version);
+		}
+
+		if($setting_analytics_facebook != '')
+		{
+			mf_enqueue_script('script_analytics_facebook', $plugin_include_url."script_facebook.js", array('api_key' => $setting_analytics_facebook), $plugin_version);
+		}
+
+		if($setting_analytics_fullstory != '')
+		{
+			mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory), $plugin_version);
+		}
 
 		if($setting_analytics_google != '')
 		{
@@ -218,16 +248,17 @@ class mf_analytics
 			wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtm.js?id=".$setting_analytics_tag_manager, $plugin_version);
 			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager), $plugin_version);
 		}
+	}
 
-		if($setting_analytics_clicky != '')
-		{
-			mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
-			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky), $plugin_version);
-		}
+	function wp_footer()
+	{
+		$setting_analytics_facebook = get_option('setting_analytics_facebook');
 
-		if($setting_analytics_fullstory != '')
+		if($setting_analytics_facebook != '')
 		{
-			mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory), $plugin_version);
+			echo "<noscript>
+				<img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=".$setting_analytics_facebook."&ev=PageView&noscript=1'>
+			</noscript>";
 		}
 	}
 }
