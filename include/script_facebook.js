@@ -8,7 +8,7 @@ jQuery(function($)
 		{
 			n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments);
 		};
-			
+
 		if(!f._fbq)f._fbq=n;
 
 		n.push=n;
