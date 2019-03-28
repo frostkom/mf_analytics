@@ -185,80 +185,102 @@ class mf_analytics
 		return $content;
 	}
 
-	function wp_head()
+	function has_do_not_track()
 	{
-		$setting_analytics_clicky = get_option('setting_analytics_clicky');
-		$setting_analytics_facebook = get_option('setting_analytics_facebook');
-		$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
-		$setting_analytics_google = get_option('setting_analytics_google');
-		$setting_analytics_tag_manager = get_option('setting_analytics_tag_manager');
+		$out = (isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1);
 
-		$plugin_include_url = plugin_dir_url(__FILE__);
-		$plugin_version = get_plugin_version(__FILE__);
-
-		if($setting_analytics_clicky != '')
+		if($out == true)
 		{
-			mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
-			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky), $plugin_version);
-		}
-
-		if($setting_analytics_facebook != '')
-		{
-			mf_enqueue_script('script_analytics_facebook', $plugin_include_url."script_facebook.js", array('api_key' => $setting_analytics_facebook), $plugin_version);
-		}
-
-		if($setting_analytics_fullstory != '')
-		{
-			mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory), $plugin_version);
-		}
-
-		if($setting_analytics_google != '')
-		{
-			wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", array(), $plugin_version); //www.googletagmanager.com/gtag/js?id=
-			mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google), $plugin_version);
-
-			$option = get_option('setting_analytics_event_tracking');
-
-			if($option != '')
+			// We don't want a DNT visitor, which is not logged in, to set the cache, which then is used by all other visitors no matter what their preference is
+			if(is_plugin_active("mf_cache/index.php") && get_option('setting_activate_cache') == 'yes')
 			{
-				$arr_events = array();
-
-				foreach(explode("\n", $option) as $event)
-				{
-					if(strpos($event, "|"))
-					{
-						list($event_title, $event_selector) = explode("|", $event);
-
-						if($event_title != '' && $event_selector != '')
-						{
-							$arr_events[] = array('title' => $event_title, 'selector' => trim($event_selector));
-						}
-					}
-				}
-
-				if(count($arr_events) > 0)
-				{
-					mf_enqueue_script('script_analytics_events', $plugin_include_url."script_events.js", array('events' => $arr_events), $plugin_version);
-				}
+				$out = is_user_logged_in();
 			}
 		}
 
-		if($setting_analytics_tag_manager != '')
+		return $out;
+	}
+
+	function wp_head()
+	{
+		if(!$this->has_do_not_track())
 		{
-			wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtm.js?id=".$setting_analytics_tag_manager, $plugin_version);
-			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager), $plugin_version);
+			$setting_analytics_clicky = get_option('setting_analytics_clicky');
+			$setting_analytics_facebook = get_option('setting_analytics_facebook');
+			$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
+			$setting_analytics_google = get_option('setting_analytics_google');
+			$setting_analytics_tag_manager = get_option('setting_analytics_tag_manager');
+
+			$plugin_include_url = plugin_dir_url(__FILE__);
+			$plugin_version = get_plugin_version(__FILE__);
+
+			if($setting_analytics_clicky != '')
+			{
+				mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
+				mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky), $plugin_version);
+			}
+
+			if($setting_analytics_facebook != '')
+			{
+				mf_enqueue_script('script_analytics_facebook', $plugin_include_url."script_facebook.js", array('api_key' => $setting_analytics_facebook), $plugin_version);
+			}
+
+			if($setting_analytics_fullstory != '')
+			{
+				mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory), $plugin_version);
+			}
+
+			if($setting_analytics_google != '')
+			{
+				wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", array(), $plugin_version); //www.googletagmanager.com/gtag/js?id=
+				mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google), $plugin_version);
+
+				$option = get_option('setting_analytics_event_tracking');
+
+				if($option != '')
+				{
+					$arr_events = array();
+
+					foreach(explode("\n", $option) as $event)
+					{
+						if(strpos($event, "|"))
+						{
+							list($event_title, $event_selector) = explode("|", $event);
+
+							if($event_title != '' && $event_selector != '')
+							{
+								$arr_events[] = array('title' => $event_title, 'selector' => trim($event_selector));
+							}
+						}
+					}
+
+					if(count($arr_events) > 0)
+					{
+						mf_enqueue_script('script_analytics_events', $plugin_include_url."script_events.js", array('events' => $arr_events), $plugin_version);
+					}
+				}
+			}
+
+			if($setting_analytics_tag_manager != '')
+			{
+				wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtm.js?id=".$setting_analytics_tag_manager, $plugin_version);
+				mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager), $plugin_version);
+			}
 		}
 	}
 
 	function wp_footer()
 	{
-		$setting_analytics_facebook = get_option('setting_analytics_facebook');
-
-		if($setting_analytics_facebook != '')
+		if(!$this->has_do_not_track())
 		{
-			echo "<noscript>
-				<img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=".$setting_analytics_facebook."&ev=PageView&noscript=1'>
-			</noscript>";
+			$setting_analytics_facebook = get_option('setting_analytics_facebook');
+
+			if($setting_analytics_facebook != '')
+			{
+				echo "<noscript>
+					<img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=".$setting_analytics_facebook."&ev=PageView&noscript=1'>
+				</noscript>";
+			}
 		}
 	}
 }

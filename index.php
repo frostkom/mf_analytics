@@ -3,7 +3,7 @@
 Plugin Name: MF Analytics
 Plugin URI: https://github.com/frostkom/mf_analytics
 Description: 
-Version: 3.1.2
+Version: 3.1.3
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://frostkom.se
