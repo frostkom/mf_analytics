@@ -293,6 +293,25 @@ class mf_analytics
 		}
 	}
 
+	function login_redirect($redirect_to, $request, $user)
+	{
+		$setting_analytics_campaign_name = get_option('setting_analytics_campaign_name');
+
+		if($setting_analytics_campaign_name != '')
+		{
+			$utm_source = check_var('utm_source');
+			$utm_medium = check_var('utm_medium');
+
+			$redirect_to .= (preg_match("/\?/", $redirect_to) ? "&" : "?")
+				."utm_source=".$utm_source
+				."&utm_medium=".$utm_medium
+				."&utm_campaign=".$setting_analytics_campaign_name
+				."&utm_term=".$user->user_login;
+		}
+
+		return $redirect_to;
+	}
+
 	function filter_direct_link_url($url, $data)
 	{
 		$setting_analytics_campaign_name = get_option('setting_analytics_campaign_name');
