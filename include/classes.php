@@ -11,18 +11,19 @@ class mf_analytics
 		add_settings_section($options_area, "", array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
 
 		$arr_settings = array();
-		$arr_settings['setting_analytics_clicky'] = __("Clicky", 'lang_analytics');
-		$arr_settings['setting_analytics_facebook'] = __("Facebook Pixel", 'lang_analytics');
-		$arr_settings['setting_analytics_fullstory'] = __("FullStory", 'lang_analytics');
-		$arr_settings['setting_analytics_google'] = __("Google Analytics", 'lang_analytics');
+		$arr_settings['setting_analytics_clicky'] = "Clicky";
+		$arr_settings['setting_analytics_facebook'] = "Facebook Pixel";
+		$arr_settings['setting_analytics_fullstory'] = "FullStory";
+		$arr_settings['setting_analytics_google'] = "Google Analytics";
 
 		if(get_option('setting_analytics_google') != '')
 		{
-			$arr_settings['setting_analytics_save_admin_stats'] = __("Save admin statistics", 'lang_analytics');
-			$arr_settings['setting_analytics_event_tracking'] = __("Track events", 'lang_analytics');
+			$arr_settings['setting_analytics_event_tracking'] = __("Track Events", 'lang_analytics');
+			$arr_settings['setting_analytics_campaign_name'] = __("Campaign Name", 'lang_analytics');
+			$arr_settings['setting_analytics_save_admin_stats'] = __("Save Statistics in Admin Interface", 'lang_analytics');
 		}
 
-		$arr_settings['setting_analytics_tag_manager'] = __("Google Tag Manager", 'lang_analytics');
+		$arr_settings['setting_analytics_tag_manager'] = "Google Tag Manager";
 
 		show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
 	}
@@ -74,24 +75,6 @@ class mf_analytics
 		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $suffix));
 	}
 
-	function setting_analytics_tag_manager_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
-
-		$suffix = ($option == '' ? "<a href='//google.com/analytics/tag-manager/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
-
-		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "GTM-00000", 'suffix' => $suffix));
-	}
-
-	function setting_analytics_save_admin_stats_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
-
-		echo show_select(array('data' => get_yes_no_for_select(array('return_integer' => true)), 'name' => $setting_key, 'value' => $option));
-	}
-
 	function setting_analytics_event_tracking_callback()
 	{
 		$setting_key = get_setting_key(__FUNCTION__);
@@ -109,6 +92,32 @@ class mf_analytics
 		}
 	}
 
+	function setting_analytics_campaign_name_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => date("Ym")."_campaign_name"));
+	}
+
+	function setting_analytics_save_admin_stats_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		echo show_select(array('data' => get_yes_no_for_select(array('return_integer' => true)), 'name' => $setting_key, 'value' => $option));
+	}
+
+	function setting_analytics_tag_manager_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		$suffix = ($option == '' ? "<a href='//google.com/analytics/tag-manager/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "GTM-00000", 'suffix' => $suffix));
+	}
+
 	function admin_init()
 	{
 		if(get_option('setting_analytics_save_admin_stats') && is_user_logged_in())
@@ -124,27 +133,27 @@ class mf_analytics
 
 		if(get_option('setting_analytics_clicky') != '')
 		{
-			$arr_services[] = __("Clicky", 'lang_analytics');
+			$arr_services[] = "Clicky";
 		}
 
 		if(get_option('setting_analytics_facebook') != '')
 		{
-			$arr_services[] = __("Facebook Pixel", 'lang_analytics');
+			$arr_services[] = "Facebook Pixel";
 		}
 
 		if(get_option('setting_analytics_fullstory') != '')
 		{
-			$arr_services[] = __("FullStory", 'lang_analytics');
+			$arr_services[] = "FullStory";
 		}
 
 		if(get_option('setting_analytics_google') != '')
 		{
-			$arr_services[] = __("Google Analytics", 'lang_analytics');
+			$arr_services[] = "Google Analytics";
 		}
 
 		if(get_option('setting_analytics_tag_manager') != '')
 		{
-			$arr_services[] = __("Google Tag Manager", 'lang_analytics');
+			$arr_services[] = "Google Tag Manager";
 		}
 
 		$count_temp = count($arr_services);
@@ -282,5 +291,17 @@ class mf_analytics
 				</noscript>";
 			}
 		}
+	}
+
+	function filter_direct_link_url($url, $data)
+	{
+		$setting_analytics_campaign_name = get_option('setting_analytics_campaign_name');
+
+		if($setting_analytics_campaign_name != '')
+		{
+			$url .= "&utm_source=".$data['type']."&utm_medium=directlink&utm_campaign=".$setting_analytics_campaign_name."&utm_term=".$data['user_data']->user_login;
+		}
+
+		return $url;
 	}
 }
