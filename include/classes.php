@@ -305,8 +305,7 @@ class mf_analytics
 			$redirect_to .= (preg_match("/\?/", $redirect_to) ? "&" : "?")
 				."utm_source=".$utm_source
 				."&utm_medium=".$utm_medium
-				."&utm_campaign=".$setting_analytics_campaign_name
-				."&utm_term=".$user->user_login;
+				."&utm_campaign=".$setting_analytics_campaign_name; //."&utm_term=".$user->user_login
 		}
 
 		return $redirect_to;
@@ -318,7 +317,7 @@ class mf_analytics
 
 		if($setting_analytics_campaign_name != '')
 		{
-			$url .= "&utm_source=".$data['type']."&utm_medium=directlink&utm_campaign=".$setting_analytics_campaign_name."&utm_term=".$data['user_data']->user_login;
+			$url .= "&utm_source=".$data['type']."&utm_medium=directlink_".$data['user_data']->user_login."&utm_campaign=".$setting_analytics_campaign_name; //."&utm_term=".$data['user_data']->user_login
 		}
 
 		return $url;
