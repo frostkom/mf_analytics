@@ -24,7 +24,7 @@ jQuery(function($)
 		{
 			dom_obj = $(this);
 
-			if(dom_obj.is('a'))
+			if(dom_obj.is("a"))
 			{
 				dom_label = dom_obj.attr('href');
 				dom_href = dom_obj.attr('href');
@@ -45,7 +45,7 @@ jQuery(function($)
 				}
 			}
 
-			else if(dom_obj.is('button'))
+			else if(dom_obj.is("button"))
 			{
 				dom_label = dom_obj.attr('rel');
 				dom_href = '';
