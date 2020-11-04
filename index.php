@@ -3,7 +3,7 @@
 Plugin Name: MF Analytics
 Plugin URI: https://github.com/frostkom/mf_analytics
 Description: 
-Version: 3.1.9
+Version: 3.2.0
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://frostkom.se
@@ -32,6 +32,8 @@ if(is_admin())
 
 else
 {
+	add_filter('template_redirect', array($obj_analytics, 'template_redirect'), 1, 0);
+
 	add_action('wp_head', array($obj_analytics, 'wp_head'), 0);
 	add_action('wp_footer', array($obj_analytics, 'wp_footer'));
 
@@ -43,6 +45,6 @@ add_filter('filter_direct_link_url', array($obj_analytics, 'filter_direct_link_u
 function uninstall_analytics()
 {
 	mf_uninstall_plugin(array(
-		'options' => array('setting_analytics_clicky', 'setting_analytics_facebook', 'setting_analytics_fullstory', 'setting_analytics_google', 'setting_analytics_save_admin_stats', 'setting_analytics_event_tracking', 'setting_analytics_tag_manager'),
+		'options' => array('setting_analytics_clicky', 'setting_analytics_facebook', 'setting_analytics_fullstory', 'setting_analytics_tag_manager', 'setting_google_search_console', 'setting_analytics_google', 'setting_analytics_event_tracking', 'setting_analytics_campaign_name', 'setting_analytics_save_admin_stats'),
 	));
 }

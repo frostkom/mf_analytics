@@ -6,7 +6,7 @@ class mf_analytics
 
 	function settings_analytics()
 	{
-		$options_area = __FUNCTION__;
+		$options_area_orig = $options_area = __FUNCTION__;
 
 		add_settings_section($options_area, "", array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
 
@@ -14,18 +14,31 @@ class mf_analytics
 		$arr_settings['setting_analytics_clicky'] = "Clicky";
 		$arr_settings['setting_analytics_facebook'] = "Facebook Pixel";
 		$arr_settings['setting_analytics_fullstory'] = "FullStory";
-		$arr_settings['setting_analytics_google'] = "Google Analytics";
 
-		if(get_option('setting_analytics_google') != '')
+		if(get_option('setting_analytics_google') == '')
 		{
-			$arr_settings['setting_analytics_event_tracking'] = __("Track Events", 'lang_analytics');
-			$arr_settings['setting_analytics_campaign_name'] = __("Campaign Name", 'lang_analytics');
-			$arr_settings['setting_analytics_save_admin_stats'] = __("Save Statistics in Admin Interface", 'lang_analytics');
+			$arr_settings['setting_analytics_google'] = "Google Analytics";
 		}
 
 		$arr_settings['setting_analytics_tag_manager'] = "Google Tag Manager";
+		$arr_settings['setting_google_search_console'] = "Google Search Console";
 
 		show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
+
+		if(get_option('setting_analytics_google') != '')
+		{
+			$options_area = $options_area_orig."_google";
+
+			add_settings_section($options_area, "", array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
+
+			$arr_settings = array();
+			$arr_settings['setting_analytics_google'] = __("Tracking ID", 'lang_analytics');
+			$arr_settings['setting_analytics_event_tracking'] = __("Track Events", 'lang_analytics');
+			$arr_settings['setting_analytics_campaign_name'] = __("Campaign Name", 'lang_analytics');
+			$arr_settings['setting_analytics_save_admin_stats'] = __("Save Statistics in Admin Interface", 'lang_analytics');
+
+			show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
+		}
 	}
 
 	function settings_analytics_callback()
@@ -35,88 +48,105 @@ class mf_analytics
 		echo settings_header($setting_key, __("Analytics", 'lang_analytics'));
 	}
 
-	function setting_analytics_clicky_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
-
-		$suffix = ($option == '' ? "<a href='//clicky.com/user/register'>".__("Get yours here", 'lang_analytics')."</a>" : "");
-
-		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
-	}
-
-	function setting_analytics_facebook_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
-
-		$suffix = ($option == '' ? "<a href='//www.facebook.com/events_manager/pixel/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
-
-		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "1234", 'suffix' => $suffix));
-	}
-
-	function setting_analytics_fullstory_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
-
-		$suffix = ($option == '' ? "<a href='//fullstory.com/pricing/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
-
-		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "ABCD", 'suffix' => $suffix));
-	}
-
-	function setting_analytics_google_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
-
-		$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
-
-		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $suffix));
-	}
-
-	function setting_analytics_event_tracking_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
-
-		echo show_textarea(array('name' => $setting_key, 'value' => $option, 'placeholder' => __("Outbound Links", 'lang_analytics')."|.phone a, .url a"));
-
-		if($option != '')
+		function setting_analytics_clicky_callback()
 		{
-			echo "<ol>
-				<li>".sprintf(__("Log in to your account at %s", 'lang_analytics'), "<a href='//analytics.google.com'>Analytics</a>")."</li>
-				<li>".__("Choose this website if you have more than one connected", 'lang_analytics')."</li>
-				<li>".__("Go to Content -> Events -> Overview", 'lang_analytics')."</li>
-			</ol>";
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			$suffix = ($option == '' ? "<a href='//clicky.com/user/register'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
 		}
-	}
 
-	function setting_analytics_campaign_name_callback()
+		function setting_analytics_facebook_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			$suffix = ($option == '' ? "<a href='//www.facebook.com/events_manager/pixel/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "1234", 'suffix' => $suffix));
+		}
+
+		function setting_analytics_fullstory_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			$suffix = ($option == '' ? "<a href='//fullstory.com/pricing/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "ABCD", 'suffix' => $suffix));
+		}
+
+		function setting_analytics_tag_manager_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			$suffix = ($option == '' ? "<a href='//google.com/analytics/tag-manager/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "GTM-00000", 'suffix' => $suffix));
+		}
+
+		function setting_google_search_console_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			$suffix = ($option == '' ? "<a href='//search.google.com/search-console'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => sprintf(__("%s or %s", 'lang_analytics'), "google0e4fd57ef13448cd.html", "abcABC"), 'suffix' => $suffix));
+		}
+
+	function settings_analytics_google_callback()
 	{
 		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
 
-		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => date("Ym")."_campaign_name"));
+		echo settings_header($setting_key, __("Analytics", 'lang_analytics')." - "."Google Analytics");
 	}
 
-	function setting_analytics_save_admin_stats_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
+		function setting_analytics_google_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
 
-		echo show_select(array('data' => get_yes_no_for_select(array('return_integer' => true)), 'name' => $setting_key, 'value' => $option));
-	}
+			$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
-	function setting_analytics_tag_manager_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $suffix));
+		}
 
-		$suffix = ($option == '' ? "<a href='//google.com/analytics/tag-manager/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+		function setting_analytics_event_tracking_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
 
-		echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "GTM-00000", 'suffix' => $suffix));
-	}
+			echo show_textarea(array('name' => $setting_key, 'value' => $option, 'placeholder' => __("Outbound Links", 'lang_analytics')."|.phone a, .url a"));
+
+			if($option != '')
+			{
+				echo "<ol>
+					<li>".sprintf(__("Log in to your account at %s", 'lang_analytics'), "<a href='//analytics.google.com'>Analytics</a>")."</li>
+					<li>".__("Choose this website if you have more than one connected", 'lang_analytics')."</li>
+					<li>".__("Go to Content -> Events -> Overview", 'lang_analytics')."</li>
+				</ol>";
+			}
+		}
+
+		function setting_analytics_campaign_name_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => date("Ym")."_campaign_name"));
+		}
+
+		function setting_analytics_save_admin_stats_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			echo show_select(array('data' => get_yes_no_for_select(array('return_integer' => true)), 'name' => $setting_key, 'value' => $option));
+		}
 
 	function admin_init()
 	{
@@ -161,6 +191,11 @@ class mf_analytics
 			$arr_services[] = "Google Tag Manager";
 		}
 
+		if(get_option('setting_google_search_console') != '')
+		{
+			$arr_services[] = "Google Search Console";
+		}
+
 		$count_temp = count($arr_services);
 
 		for($i = 0; $i < $count_temp; $i++)
@@ -199,7 +234,7 @@ class mf_analytics
 		return $content;
 	}
 
-	function has_do_not_track()
+	/*function has_do_not_track()
 	{
 		$out = (isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1);
 
@@ -213,17 +248,36 @@ class mf_analytics
 		}
 
 		return $out;
+	}*/
+
+	function template_redirect()
+	{
+		global $wp_query;
+
+		if(isset($wp_query->query['name']))
+		{
+			$setting_google_search_console = get_option('setting_google_search_console');
+
+			if($setting_google_search_console != '' && substr($setting_google_search_console, 0, 6) == 'google' && $wp_query->query['name'] == $setting_google_search_console)
+			{
+				header("Content-type: text/html; charset=".get_option('blog_charset'));
+
+				echo "google-site-verification: ".$setting_google_search_console;
+				exit;
+			}
+		}
 	}
 
 	function wp_head()
 	{
-		if(!$this->has_do_not_track())
-		{
+		/*if(!$this->has_do_not_track())
+		{*/
 			$setting_analytics_clicky = get_option('setting_analytics_clicky');
 			$setting_analytics_facebook = get_option('setting_analytics_facebook');
 			$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
 			$setting_analytics_google = get_option('setting_analytics_google');
 			$setting_analytics_tag_manager = get_option('setting_analytics_tag_manager');
+			$setting_google_search_console = get_option('setting_google_search_console');
 
 			$plugin_include_url = plugin_dir_url(__FILE__);
 			$plugin_version = get_plugin_version(__FILE__);
@@ -280,13 +334,19 @@ class mf_analytics
 				wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtm.js?id=".$setting_analytics_tag_manager, $plugin_version);
 				mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager), $plugin_version);
 			}
-		}
+
+			// We don't want this to be loaded on every page load just because we want G to verify our site "once"
+			if($setting_google_search_console != '' && substr($setting_google_search_console, 0, 6) != 'google') // && $_SERVER['HTTP_USER_AGENT'] == "Mozilla/5.0 (compatible; Google-Site-Verification/1.0)"
+			{
+				echo "<meta name='google-site-verification' content='".$setting_google_search_console."'>";
+			}
+		//}
 	}
 
 	function wp_footer()
 	{
-		if(!$this->has_do_not_track())
-		{
+		/*if(!$this->has_do_not_track())
+		{*/
 			$setting_analytics_facebook = get_option('setting_analytics_facebook');
 
 			if($setting_analytics_facebook != '')
@@ -295,7 +355,7 @@ class mf_analytics
 					<img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=".$setting_analytics_facebook."&ev=PageView&noscript=1'>
 				</noscript>";
 			}
-		}
+		//}
 	}
 
 	function login_redirect($redirect_to, $request, $user)
