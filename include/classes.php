@@ -159,6 +159,18 @@ class mf_analytics
 		{
 			$this->wp_head();
 		}
+
+		if(function_exists('wp_add_privacy_policy_content'))
+		{
+			$services_used = $this->gather_services_used();
+
+			if($services_used != '')
+			{
+				$content = sprintf(__("We use %s which stores aggregated data regarding your visit on this site to improve our website and evaluate our marketing efforts.", 'lang_analytics'), $services_used);
+
+				wp_add_privacy_policy_content(__("Analytics", 'lang_analytics'), $content);
+			}
+		}
 	}
 
 	function gather_services_used()
@@ -219,7 +231,7 @@ class mf_analytics
 		return $out;
 	}
 
-	function add_policy($content)
+	/*function add_policy($content)
 	{
 		$services_used = $this->gather_services_used();
 
@@ -232,7 +244,7 @@ class mf_analytics
 		}
 
 		return $content;
-	}
+	}*/
 
 	/*function has_do_not_track()
 	{
