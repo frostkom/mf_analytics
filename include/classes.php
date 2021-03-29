@@ -150,11 +150,6 @@ class mf_analytics
 
 	function admin_init()
 	{
-		if(!is_plugin_active("mf_base/index.php"))
-		{
-			deactivate_plugins(str_replace("include/classes.php", "index.php", plugin_basename(__FILE__)));
-		}
-
 		if(get_option('setting_analytics_save_admin_stats') && is_user_logged_in())
 		{
 			$this->wp_head();
