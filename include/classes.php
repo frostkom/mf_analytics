@@ -85,7 +85,7 @@ class mf_analytics
 
 			$suffix = ($option == '' ? "<a href='//google.com/analytics/tag-manager/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
-			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "GTM-00000", 'suffix' => $suffix));
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "G-012ABC", 'suffix' => $suffix));
 		}
 
 		function setting_google_search_console_callback()
