@@ -8,6 +8,8 @@ class mf_analytics
 	{
 		$options_area_orig = $options_area = __FUNCTION__;
 
+		// Generic
+		############################
 		add_settings_section($options_area, "", array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
 
 		$arr_settings = array();
@@ -24,7 +26,10 @@ class mf_analytics
 		$arr_settings['setting_google_search_console'] = "Google Search Console";
 
 		show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
+		############################
 
+		// Google
+		############################
 		if(get_option('setting_analytics_google') != '')
 		{
 			$options_area = $options_area_orig."_google";
@@ -39,6 +44,7 @@ class mf_analytics
 
 			show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
 		}
+		############################
 	}
 
 	function settings_analytics_callback()
@@ -225,21 +231,6 @@ class mf_analytics
 
 		return $out;
 	}
-
-	/*function add_policy($content)
-	{
-		$services_used = $this->gather_services_used();
-
-		if($services_used != '')
-		{
-			$content .= "<h3>".__("Analytics", 'lang_analytics')."</h3>
-			<p>"
-				.sprintf(__("We use %s which stores aggregated data regarding your visit on this site to improve our website and evaluate our marketing efforts.", 'lang_analytics'), $services_used)
-			."</p>";
-		}
-
-		return $content;
-	}*/
 
 	/*function has_do_not_track()
 	{
