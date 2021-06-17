@@ -13,6 +13,7 @@ class mf_analytics
 		add_settings_section($options_area, "", array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
 
 		$arr_settings = array();
+		$arr_settings['setting_analytics_albacross'] = "Albacross";
 		$arr_settings['setting_analytics_clicky'] = "Clicky";
 		$arr_settings['setting_analytics_facebook'] = "Facebook Pixel";
 		$arr_settings['setting_analytics_fullstory'] = "FullStory";
@@ -53,6 +54,16 @@ class mf_analytics
 
 		echo settings_header($setting_key, __("Analytics", 'lang_analytics'));
 	}
+
+		function setting_analytics_albacross_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			$suffix = ($option == '' ? "<a href='//albacross.com'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
+		}
 
 		function setting_analytics_clicky_callback()
 		{
@@ -179,6 +190,11 @@ class mf_analytics
 		$out = "";
 		$arr_services = array();
 
+		if(get_option('setting_analytics_albacross') != '')
+		{
+			$arr_services[] = "Albacross";
+		}
+
 		if(get_option('setting_analytics_clicky') != '')
 		{
 			$arr_services[] = "Clicky";
@@ -270,6 +286,7 @@ class mf_analytics
 	{
 		/*if(!$this->has_do_not_track())
 		{*/
+			$setting_analytics_albacross = get_option('setting_analytics_albacross');
 			$setting_analytics_clicky = get_option('setting_analytics_clicky');
 			$setting_analytics_facebook = get_option('setting_analytics_facebook');
 			$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
@@ -279,6 +296,11 @@ class mf_analytics
 
 			$plugin_include_url = plugin_dir_url(__FILE__);
 			$plugin_version = get_plugin_version(__FILE__);
+
+			if($setting_analytics_albacross != '')
+			{
+				mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross), $plugin_version);
+			}
 
 			if($setting_analytics_clicky != '')
 			{
