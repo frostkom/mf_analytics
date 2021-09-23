@@ -185,6 +185,57 @@ class mf_analytics
 		}
 	}
 
+	function filter_sites_table_settings($arr_settings)
+	{
+		$arr_settings['settings_analytics'] = array(
+			'setting_analytics_albacross' => array(
+				'type' => 'string',
+				'global' => false,
+				'icon' => "fas fa-dove",
+				'name' => "Albacross",
+			),
+			'setting_analytics_clicky' => array(
+				'type' => 'string',
+				'global' => false,
+				//'icon' => "fab fa-cuttlefish",
+				'icon' => "fas fa-mouse-pointer",
+				'name' => "Clicky",
+			),
+			'setting_analytics_facebook' => array(
+				'type' => 'string',
+				'global' => false,
+				'icon' => "fab fa-facebook",
+				'name' => "Facebook Pixel",
+			),
+			'setting_analytics_fullstory' => array(
+				'type' => 'string',
+				'global' => false,
+				'icon' => "fas fa-book",
+				'name' => "FullStory",
+			),
+			'setting_analytics_google' => array(
+				'type' => 'string',
+				'global' => false,
+				'icon' => "fab fa-google",
+				'name' => "Google Analytics",
+			),
+			'setting_analytics_tag_manager' => array(
+				'type' => 'string',
+				'global' => false,
+				'icon' => "fab fa-google",
+				'name' => "Google Tag Manager",
+			),
+			'setting_google_search_console' => array(
+				'type' => 'string',
+				'global' => false,
+				'icon' => "fab fa-google",
+				'name' => "Google Search Console",
+			),
+		);
+
+		return $arr_settings;
+	}
+
 	function gather_services_used()
 	{
 		$out = "";
