@@ -236,6 +236,46 @@ class mf_analytics
 		return $arr_settings;
 	}
 
+	function filter_cookie_types($arr_cookie_types)
+	{
+		if(get_option('setting_analytics_albacross') != '')
+		{
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+		}
+
+		if(get_option('setting_analytics_clicky') != '')
+		{
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+		}
+
+		if(get_option('setting_analytics_facebook') != '')
+		{
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+		}
+
+		if(get_option('setting_analytics_fullstory') != '')
+		{
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+		}
+
+		if(get_option('setting_analytics_google') != '')
+		{
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+		}
+
+		if(get_option('setting_analytics_tag_manager') != '')
+		{
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+		}
+
+		if(get_option('setting_google_search_console') != '')
+		{
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+		}
+
+		return $arr_cookie_types;
+	}
+
 	function gather_services_used()
 	{
 		$out = "";
