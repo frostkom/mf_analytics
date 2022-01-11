@@ -240,37 +240,38 @@ class mf_analytics
 	{
 		if(get_option('setting_analytics_albacross') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+			$arr_cookie_types['public']['nQ_cookieId'] = array('label' => __("Identify Albacross User", 'lang_analytics'), 'used' => false, 'lifetime' => "1 year");
 		}
 
 		if(get_option('setting_analytics_clicky') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		if(get_option('setting_analytics_facebook') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		if(get_option('setting_analytics_fullstory') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		if(get_option('setting_analytics_google') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+			$arr_cookie_types['public']['_ga'] = array('label' => __("Used to distinguish Analytics users", 'lang_analytics'), 'used' => false, 'lifetime' => "2 year"); // 2 years
+			//$arr_cookie_types['public']['_gid'] = array('label' => __("Used to distinguish Analytics users", 'lang_analytics'), 'used' => false, 'lifetime' => "24 hour");
 		}
 
 		if(get_option('setting_analytics_tag_manager') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		if(get_option('setting_google_search_console') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false);
+			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		return $arr_cookie_types;
