@@ -240,7 +240,7 @@ class mf_analytics
 	{
 		if(get_option('setting_analytics_albacross') != '')
 		{
-			$arr_cookie_types['public']['nQ_cookieId'] = array('label' => __("Identify Albacross User", 'lang_analytics'), 'used' => false, 'lifetime' => "1 year");
+			$arr_cookie_types['public']['nQ_cookieId'] = array('label' => sprintf(__("Identify %s User", 'lang_analytics'), "Albacross"), 'used' => false, 'lifetime' => "1 year");
 		}
 
 		if(get_option('setting_analytics_clicky') != '')
@@ -260,8 +260,8 @@ class mf_analytics
 
 		if(get_option('setting_analytics_google') != '')
 		{
-			$arr_cookie_types['public']['_ga'] = array('label' => __("Used to distinguish Analytics users", 'lang_analytics'), 'used' => false, 'lifetime' => "2 year"); // 2 years
-			//$arr_cookie_types['public']['_gid'] = array('label' => __("Used to distinguish Analytics users", 'lang_analytics'), 'used' => false, 'lifetime' => "24 hour");
+			$arr_cookie_types['public']['_ga'] = array('label' => sprintf(__("Used to distinguish %s users", 'lang_analytics'), "Analytics"), 'used' => false, 'lifetime' => "2 year"); // 2 years
+			//$arr_cookie_types['public']['_gid'] = array('label' => sprintf(__("Used to distinguish %s users", 'lang_analytics'), "Analytics"), 'used' => false, 'lifetime' => "24 hour");
 		}
 
 		if(get_option('setting_analytics_tag_manager') != '')

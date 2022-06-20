@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-03 10:57+0100\n"
+"POT-Creation-Date: 2022-06-20 14:54+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -15,61 +15,48 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../include/classes.php:35
 msgid "Tracking ID"
 msgstr "Spårnings-ID"
 
-#: ../include/classes.php:36
 msgid "Track Events"
 msgstr "Spåra händelser"
 
-#: ../include/classes.php:37
 msgid "Campaign Name"
 msgstr "Namn på kampanj"
 
-#: ../include/classes.php:38
 msgid "Save Statistics in Admin Interface"
 msgstr "Spara statistik i admingränssnittet"
 
-#: ../include/classes.php:48
-#: ../include/classes.php:105
-#: ../include/classes.php:228
 msgid "Analytics"
 msgstr "Statistik"
 
-#: ../include/classes.php:56
-#: ../include/classes.php:66
-#: ../include/classes.php:76
-#: ../include/classes.php:86
-#: ../include/classes.php:96
-#: ../include/classes.php:113
 msgid "Get yours here"
 msgstr "Hämta din här"
 
-#: ../include/classes.php:98
-#, php-format
 msgid "%s or %s"
 msgstr "%s eller %s"
 
-#: ../include/classes.php:123
 msgid "Outbound Links"
 msgstr "Utgående länkar"
 
-#: ../include/classes.php:128
-#, php-format
 msgid "Log in to your account at %s"
 msgstr "Logga in på ditt konto på %s"
 
-#: ../include/classes.php:129
 msgid "Choose this website if you have more than one connected"
 msgstr "Välj denna webbplats om du har fler än en kopplad"
 
-#: ../include/classes.php:130
 msgid "Go to Content -> Events -> Overview"
 msgstr "Gå till Beteende -> Händelser -> Översikt"
 
-#: ../include/classes.php:230
-#, php-format
 msgid "We use %s which stores aggregated data regarding your visit on this site to improve our website and evaluate our marketing efforts."
 msgstr "Vi använder %s som lagrar aggregerad data om ditt besök för att kunna förbättra vår webbplats och utvärdera våra marknadsföringsinsatser."
+
+msgid "Identify %s User"
+msgstr "Identifiera %s-användare"
+
+msgid "Cookie Explanation..."
+msgstr "Förklaring av kakor..."
+
+msgid "Used to distinguish %s users"
+msgstr "Används för att hitta %s-användare"
 
