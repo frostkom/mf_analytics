@@ -1,4 +1,4 @@
-jQuery(function($)
+if(script_analytics_facebook.allow_cookies == true || document.cookie.indexOf("cookie_accepted=") !== -1)
 {
 	!function(f,b,e,v,n,t,s)
 	{
@@ -25,4 +25,4 @@ jQuery(function($)
 
 	fbq('init', script_analytics_facebook.api_key);
 	fbq('track', 'PageView');
-});
+}

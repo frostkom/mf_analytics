@@ -340,22 +340,6 @@ class mf_analytics
 		return $out;
 	}
 
-	/*function has_do_not_track()
-	{
-		$out = (isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1);
-
-		if($out == true)
-		{
-			// We don't want a DNT visitor, which is not logged in, to set the cache, which then is used by all other visitors no matter what their preference is
-			if(is_plugin_active("mf_cache/index.php") && get_option('setting_activate_cache') == 'yes')
-			{
-				$out = is_user_logged_in();
-			}
-		}
-
-		return $out;
-	}*/
-
 	function template_redirect()
 	{
 		global $wp_query;
@@ -376,89 +360,89 @@ class mf_analytics
 
 	function wp_head()
 	{
-		/*if(!$this->has_do_not_track())
-		{*/
-			$setting_analytics_albacross = get_option('setting_analytics_albacross');
-			$setting_analytics_clicky = get_option('setting_analytics_clicky');
-			$setting_analytics_facebook = get_option('setting_analytics_facebook');
-			$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
-			$setting_analytics_google = get_option('setting_analytics_google');
-			$setting_analytics_tag_manager = get_option('setting_analytics_tag_manager');
-			$setting_google_search_console = get_option('setting_google_search_console');
+		$allow_cookies = apply_filters('get_allow_cookies', true);
 
-			$plugin_include_url = plugin_dir_url(__FILE__);
-			$plugin_version = get_plugin_version(__FILE__);
+		$setting_analytics_albacross = get_option('setting_analytics_albacross');
+		$setting_analytics_clicky = get_option('setting_analytics_clicky');
+		$setting_analytics_facebook = get_option('setting_analytics_facebook');
+		$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
+		$setting_analytics_google = get_option('setting_analytics_google');
+		$setting_analytics_tag_manager = get_option('setting_analytics_tag_manager');
+		$setting_google_search_console = get_option('setting_google_search_console');
 
-			if($setting_analytics_albacross != '')
+		$plugin_include_url = plugin_dir_url(__FILE__);
+		$plugin_version = get_plugin_version(__FILE__);
+
+		if($setting_analytics_albacross != '')
+		{
+			mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross, 'allow_cookies' => $allow_cookies), $plugin_version);
+		}
+
+		if($setting_analytics_clicky != '')
+		{
+			//mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
+			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky, 'allow_cookies' => $allow_cookies), $plugin_version);
+		}
+
+		if($setting_analytics_facebook != '')
+		{
+			mf_enqueue_script('script_analytics_facebook', $plugin_include_url."script_facebook.js", array('api_key' => $setting_analytics_facebook, 'allow_cookies' => $allow_cookies), $plugin_version);
+		}
+
+		if($setting_analytics_fullstory != '')
+		{
+			mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory, 'allow_cookies' => $allow_cookies), $plugin_version);
+		}
+
+		if($setting_analytics_google != '')
+		{
+			//wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", array(), $plugin_version);
+			mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_cookies), $plugin_version);
+
+			$option = get_option('setting_analytics_event_tracking');
+
+			if($option != '')
 			{
-				mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross), $plugin_version);
-			}
+				$arr_events = array();
 
-			if($setting_analytics_clicky != '')
-			{
-				mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
-				mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky), $plugin_version);
-			}
-
-			if($setting_analytics_facebook != '')
-			{
-				mf_enqueue_script('script_analytics_facebook', $plugin_include_url."script_facebook.js", array('api_key' => $setting_analytics_facebook), $plugin_version);
-			}
-
-			if($setting_analytics_fullstory != '')
-			{
-				mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory), $plugin_version);
-			}
-
-			if($setting_analytics_google != '')
-			{
-				wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", array(), $plugin_version); //www.googletagmanager.com/gtag/js?id=
-				mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google), $plugin_version);
-
-				$option = get_option('setting_analytics_event_tracking');
-
-				if($option != '')
+				foreach(explode("\n", $option) as $event)
 				{
-					$arr_events = array();
-
-					foreach(explode("\n", $option) as $event)
+					if(strpos($event, "|"))
 					{
-						if(strpos($event, "|"))
-						{
-							list($event_title, $event_selector) = explode("|", $event);
+						list($event_title, $event_selector) = explode("|", $event);
 
-							if($event_title != '' && $event_selector != '')
-							{
-								$arr_events[] = array('title' => $event_title, 'selector' => trim($event_selector));
-							}
+						if($event_title != '' && $event_selector != '')
+						{
+							$arr_events[] = array('title' => $event_title, 'selector' => trim($event_selector));
 						}
 					}
+				}
 
-					if(count($arr_events) > 0)
-					{
-						mf_enqueue_script('script_analytics_events', $plugin_include_url."script_events.js", array('events' => $arr_events), $plugin_version);
-					}
+				if(count($arr_events) > 0)
+				{
+					mf_enqueue_script('script_analytics_events', $plugin_include_url."script_events.js", array('events' => $arr_events), $plugin_version);
 				}
 			}
+		}
 
-			if($setting_analytics_tag_manager != '')
-			{
-				wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtm.js?id=".$setting_analytics_tag_manager, $plugin_version);
-				mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager), $plugin_version);
-			}
+		if($setting_analytics_tag_manager != '')
+		{
+			//wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtm.js?id=".$setting_analytics_tag_manager, $plugin_version);
+			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager, 'allow_cookies' => $allow_cookies), $plugin_version);
+		}
 
-			// We don't want this to be loaded on every page load just because we want G to verify our site "once"
-			if($setting_google_search_console != '' && substr($setting_google_search_console, 0, 6) != 'google') // && $_SERVER['HTTP_USER_AGENT'] == "Mozilla/5.0 (compatible; Google-Site-Verification/1.0)"
-			{
-				echo "<meta name='google-site-verification' content='".$setting_google_search_console."'>";
-			}
-		//}
+		if($setting_google_search_console != '' && substr($setting_google_search_console, 0, 6) != 'google')
+		{
+			echo "<meta name='google-site-verification' content='".$setting_google_search_console."'>";
+		}
 	}
 
 	function wp_footer()
 	{
-		/*if(!$this->has_do_not_track())
-		{*/
+		$allow_cookies = apply_filters('get_allow_cookies', true);
+
+		if($allow_cookies == true)
+		{
 			$setting_analytics_facebook = get_option('setting_analytics_facebook');
 
 			if($setting_analytics_facebook != '')
@@ -467,7 +451,7 @@ class mf_analytics
 					<img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=".$setting_analytics_facebook."&ev=PageView&noscript=1'>
 				</noscript>";
 			}
-		//}
+		}
 	}
 
 	function login_redirect($redirect_to, $request, $user)
