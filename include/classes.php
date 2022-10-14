@@ -236,45 +236,45 @@ class mf_analytics
 		return $arr_settings;
 	}
 
-	function filter_cookie_types($arr_cookie_types)
+	function filter_cookie_types($array)
 	{
 		if(get_option('setting_analytics_albacross') != '')
 		{
-			$arr_cookie_types['public']['nQ_cookieId'] = array('label' => sprintf(__("Identify %s User", 'lang_analytics'), "Albacross"), 'used' => false, 'lifetime' => "1 year");
+			$array['public']['nQ_cookieId'] = array('label' => sprintf(__("Identify %s User", 'lang_analytics'), "Albacross"), 'used' => false, 'lifetime' => "1 year");
 		}
 
 		if(get_option('setting_analytics_clicky') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
+			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		if(get_option('setting_analytics_facebook') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
+			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		if(get_option('setting_analytics_fullstory') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
+			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		if(get_option('setting_analytics_google') != '')
 		{
-			$arr_cookie_types['public']['_ga'] = array('label' => sprintf(__("Used to distinguish %s users", 'lang_analytics'), "Analytics"), 'used' => false, 'lifetime' => "2 year"); // 2 years
-			//$arr_cookie_types['public']['_gid'] = array('label' => sprintf(__("Used to distinguish %s users", 'lang_analytics'), "Analytics"), 'used' => false, 'lifetime' => "24 hour");
+			$array['public']['_ga'] = array('label' => sprintf(__("Used to distinguish %s users", 'lang_analytics'), "Analytics"), 'used' => false, 'lifetime' => "2 year"); // 2 years
+			//$array['public']['_gid'] = array('label' => sprintf(__("Used to distinguish %s users", 'lang_analytics'), "Analytics"), 'used' => false, 'lifetime' => "24 hour");
 		}
 
 		if(get_option('setting_analytics_tag_manager') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
+			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		if(get_option('setting_google_search_console') != '')
 		{
-			//$arr_cookie_types['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
+			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
-		return $arr_cookie_types;
+		return $array;
 	}
 
 	function gather_services_used()
@@ -360,7 +360,7 @@ class mf_analytics
 
 	function wp_head()
 	{
-		$allow_cookies = apply_filters('get_allow_cookies', true);
+		$allow_sensitive_data = apply_filters('get_allow_cookies', true);
 
 		$setting_analytics_albacross = get_option('setting_analytics_albacross');
 		$setting_analytics_clicky = get_option('setting_analytics_clicky');
@@ -375,29 +375,29 @@ class mf_analytics
 
 		if($setting_analytics_albacross != '')
 		{
-			mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross, 'allow_cookies' => $allow_cookies), $plugin_version);
+			mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
 		}
 
 		if($setting_analytics_clicky != '')
 		{
 			//mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
-			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky, 'allow_cookies' => $allow_cookies), $plugin_version);
+			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
 		}
 
 		if($setting_analytics_facebook != '')
 		{
-			mf_enqueue_script('script_analytics_facebook', $plugin_include_url."script_facebook.js", array('api_key' => $setting_analytics_facebook, 'allow_cookies' => $allow_cookies), $plugin_version);
+			mf_enqueue_script('script_analytics_facebook', $plugin_include_url."script_facebook.js", array('api_key' => $setting_analytics_facebook, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
 		}
 
 		if($setting_analytics_fullstory != '')
 		{
-			mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory, 'allow_cookies' => $allow_cookies), $plugin_version);
+			mf_enqueue_script('script_analytics_fullstory', $plugin_include_url."script_fullstory.js", array('api_key' => $setting_analytics_fullstory, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
 		}
 
 		if($setting_analytics_google != '')
 		{
 			//wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", array(), $plugin_version);
-			mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_cookies), $plugin_version);
+			mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
 
 			$option = get_option('setting_analytics_event_tracking');
 
@@ -428,7 +428,7 @@ class mf_analytics
 		if($setting_analytics_tag_manager != '')
 		{
 			//wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtm.js?id=".$setting_analytics_tag_manager, $plugin_version);
-			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager, 'allow_cookies' => $allow_cookies), $plugin_version);
+			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
 		}
 
 		if($setting_google_search_console != '' && substr($setting_google_search_console, 0, 6) != 'google')
@@ -439,9 +439,7 @@ class mf_analytics
 
 	function wp_footer()
 	{
-		$allow_cookies = apply_filters('get_allow_cookies', true);
-
-		if($allow_cookies == true)
+		if(apply_filters('get_allow_cookies', true) == true)
 		{
 			$setting_analytics_facebook = get_option('setting_analytics_facebook');
 
