@@ -20,48 +20,70 @@ jQuery(function($)
 
 	$.each(script_analytics_events.events, function(index, value)
 	{
-		$(document).on('click', value.selector, function(e)
+		if($(value.selector).is("select"))
 		{
-			dom_obj = $(this);
-
-			if(dom_obj.is("a"))
+			$(document).on('change', value.selector, function()
 			{
-				dom_label = dom_obj.attr('href');
-				dom_href = dom_obj.attr('href');
+				dom_obj = $(this);
 
-				if(typeof dom_href != 'undefined')
+				dom_label = dom_obj.find('option:selected').text();
+				dom_value = dom_obj.val();
+
+				ga('send', 'event',
 				{
-					setTimeout(use_link, 1000);
+					eventCategory: value.title,
+					eventAction: 'change',
+					eventLabel: dom_label,
+					eventValue: dom_value
+				});
+			});
+		}
+
+		else
+		{
+			$(document).on('click', value.selector, function()
+			{
+				dom_obj = $(this);
+
+				if(dom_obj.is("a"))
+				{
+					dom_label = dom_obj.attr('href');
+					dom_href = dom_obj.attr('href');
+
+					if(typeof dom_href != 'undefined')
+					{
+						setTimeout(use_link, 1000);
+
+						ga('send', 'event',
+						{
+							eventCategory: value.title,
+							eventAction: 'click',
+							eventLabel: dom_label,
+							hitCallback: use_link
+						});
+
+						return false;
+					}
+				}
+
+				else if(dom_obj.is("button"))
+				{
+					dom_label = dom_obj.attr('rel');
+					dom_href = '';
+
+					setTimeout(submit_form, 1000);
 
 					ga('send', 'event',
 					{
 						eventCategory: value.title,
 						eventAction: 'click',
 						eventLabel: dom_label,
-						hitCallback: use_link
+						hitCallback: submit_form
 					});
 
 					return false;
 				}
-			}
-
-			else if(dom_obj.is("button"))
-			{
-				dom_label = dom_obj.attr('rel');
-				dom_href = '';
-
-				setTimeout(submit_form, 1000);
-
-				ga('send', 'event',
-				{
-					eventCategory: value.title,
-					eventAction: 'click',
-					eventLabel: dom_label,
-					hitCallback: submit_form
-				});
-
-				return false;
-			}
-		});
+			});
+		}
 	});
 });
