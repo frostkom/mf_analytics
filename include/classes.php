@@ -375,13 +375,13 @@ class mf_analytics
 
 		if($setting_analytics_albacross != '')
 		{
-			mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
+			mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version), $plugin_version);
 		}
 
 		if($setting_analytics_clicky != '')
 		{
 			//mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js", $plugin_version);
-			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
+			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version), $plugin_version);
 		}
 
 		if($setting_analytics_facebook != '')
@@ -397,7 +397,8 @@ class mf_analytics
 		if($setting_analytics_google != '')
 		{
 			//wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js", array(), $plugin_version);
-			mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
+			//mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version), $plugin_version);
+			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version), $plugin_version);
 
 			$option = get_option('setting_analytics_event_tracking');
 
@@ -428,7 +429,7 @@ class mf_analytics
 		if($setting_analytics_tag_manager != '')
 		{
 			//wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtm.js?id=".$setting_analytics_tag_manager, $plugin_version);
-			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager, 'allow_cookies' => $allow_sensitive_data), $plugin_version);
+			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version), $plugin_version);
 		}
 
 		if($setting_google_search_console != '' && substr($setting_google_search_console, 0, 6) != 'google')

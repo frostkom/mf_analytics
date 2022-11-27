@@ -29,12 +29,19 @@ jQuery(function($)
 				dom_label = dom_obj.find('option:selected').text();
 				dom_value = dom_obj.val();
 
-				ga('send', 'event',
+				/*ga('send',
 				{
+					hitType: 'event',
 					eventCategory: value.title,
 					eventAction: 'change',
 					eventLabel: dom_label,
 					eventValue: dom_value
+				});*/
+
+				gtag('event', 'change', {
+					'event_label': dom_label,
+					'event_category': value.title,
+					'value': dom_value
 				});
 			});
 		}
@@ -54,12 +61,18 @@ jQuery(function($)
 					{
 						setTimeout(use_link, 1000);
 
-						ga('send', 'event',
+						/*ga('send',
 						{
+							hitType: 'event',
 							eventCategory: value.title,
 							eventAction: 'click',
 							eventLabel: dom_label,
 							hitCallback: use_link
+						});*/
+
+						gtag('event', 'click', {
+							'event_label': dom_label,
+							'event_category': value.title
 						});
 
 						return false;
@@ -71,17 +84,49 @@ jQuery(function($)
 					dom_label = dom_obj.attr('rel');
 					dom_href = '';
 
-					setTimeout(submit_form, 1000);
-
-					ga('send', 'event',
+					if(dom_obj.attr('type') == 'submit')
 					{
-						eventCategory: value.title,
-						eventAction: 'click',
-						eventLabel: dom_label,
-						hitCallback: submit_form
-					});
+						setTimeout(submit_form, 1000);
 
-					return false;
+						/*ga('send',
+						{
+							hitType: 'event',
+							eventCategory: value.title,
+							eventAction: 'click',
+							eventLabel: dom_label,
+							hitCallback: submit_form
+						});*/
+
+						gtag('event', 'click', {
+							'event_label': dom_label,
+							'event_category': value.title
+						});
+
+						return false;
+					}
+
+					else
+					{
+						console.log("Button clicked" , value);
+
+						/*ga('send',
+						{
+							hitType: 'event',
+							eventCategory: value.title,
+							eventAction: 'click',
+							eventLabel: dom_label
+						});*/
+
+						gtag('event', 'click', {
+							'event_label': dom_label,
+							'event_category': value.title
+						});
+					}
+				}
+
+				else
+				{
+					console.log("No type found...");
 				}
 			});
 		}
