@@ -8,7 +8,7 @@ if(script_analytics_clicky.allow_cookies == true || document.cookie.indexOf("coo
 		script_tag.type = 'text/javascript';
 		script_tag.async = true;
 		script_tag.src = script_src;
-		
+
 		var first_sibling_tag = document.getElementsByTagName('script')[0];
 		first_sibling_tag.parentNode.insertBefore(script_tag, first_sibling_tag);*/
 

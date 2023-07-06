@@ -162,12 +162,12 @@ class mf_analytics
 			$setting_key = get_setting_key(__FUNCTION__);
 			$option = get_option($setting_key);
 
-			echo show_select(array('data' => get_yes_no_for_select(array('return_integer' => true)), 'name' => $setting_key, 'value' => $option));
+			echo show_select(array('data' => get_yes_no_for_select(), 'name' => $setting_key, 'value' => $option));
 		}
 
 	function admin_init()
 	{
-		if(get_option('setting_analytics_save_admin_stats') && is_user_logged_in())
+		if(get_option('setting_analytics_save_admin_stats') == 'yes' && is_user_logged_in())
 		{
 			$this->wp_head();
 		}
