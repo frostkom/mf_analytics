@@ -462,7 +462,7 @@ class mf_analytics
 			$utm_source = check_var('utm_source');
 			$utm_medium = check_var('utm_medium');
 
-			$redirect_to .= (preg_match("/\?/", $redirect_to) ? "&" : "?")
+			$redirect_to .= (strpos($redirect_to, "?") ? "&" : "?")
 				."utm_source=".$utm_source
 				."&utm_medium=".$utm_medium
 				."&utm_campaign=".$setting_analytics_campaign_name; //."&utm_term=".$user->user_login
