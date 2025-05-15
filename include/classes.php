@@ -41,7 +41,6 @@ class mf_analytics
 			$arr_settings['setting_analytics_google'] = __("Tracking ID", 'lang_analytics');
 			$arr_settings['setting_analytics_event_tracking'] = __("Track Events", 'lang_analytics');
 			$arr_settings['setting_analytics_campaign_name'] = __("Campaign Name", 'lang_analytics');
-			$arr_settings['setting_analytics_save_admin_stats'] = __("Save Statistics in Admin Interface", 'lang_analytics');
 
 			show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
 		}
@@ -157,21 +156,8 @@ class mf_analytics
 			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => date("Ym")."_campaign_name"));
 		}
 
-		function setting_analytics_save_admin_stats_callback()
-		{
-			$setting_key = get_setting_key(__FUNCTION__);
-			$option = get_option($setting_key);
-
-			echo show_select(array('data' => get_yes_no_for_select(), 'name' => $setting_key, 'value' => $option));
-		}
-
 	function admin_init()
 	{
-		if(get_option('setting_analytics_save_admin_stats') == 'yes' && is_user_logged_in())
-		{
-			$this->wp_head();
-		}
-
 		if(function_exists('wp_add_privacy_policy_content'))
 		{
 			$services_used = $this->gather_services_used();
