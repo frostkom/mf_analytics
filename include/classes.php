@@ -2,6 +2,8 @@
 
 class mf_analytics
 {
+	var $footer_output;
+
 	function __construct(){}
 
 	function settings_analytics()
@@ -357,22 +359,27 @@ class mf_analytics
 		$setting_google_search_console = get_option('setting_google_search_console');
 
 		$plugin_include_url = plugin_dir_url(__FILE__);
-		$plugin_version = get_plugin_version(__FILE__);
 
 		if($setting_analytics_albacross != '')
 		{
-			mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version));
+			mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross, 'allow_cookies' => $allow_sensitive_data));
 		}
 
 		if($setting_analytics_clicky != '')
 		{
-			//mf_enqueue_script('script_analytics_clicky_api', "//static.getclicky.com/js");
-			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version));
+			mf_enqueue_script('script_analytics_clicky', $plugin_include_url."script_clicky.js", array('api_key' => $setting_analytics_clicky, 'allow_cookies' => $allow_sensitive_data));
 		}
 
 		if($setting_analytics_facebook != '')
 		{
 			mf_enqueue_script('script_analytics_facebook', $plugin_include_url."script_facebook.js", array('api_key' => $setting_analytics_facebook, 'allow_cookies' => $allow_sensitive_data));
+
+			if($allow_sensitive_data == true)
+			{
+				$this->footer_output = "<noscript>
+					<img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=".$setting_analytics_facebook."&ev=PageView&noscript=1'>
+				</noscript>";
+			}
 		}
 
 		if($setting_analytics_fullstory != '')
@@ -382,9 +389,7 @@ class mf_analytics
 
 		if($setting_analytics_google != '')
 		{
-			//wp_enqueue_script('script_analytics_google_api', "https://google-analytics.com/analytics.js");
-			//mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version));
-			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version));
+			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_sensitive_data));
 
 			$option = get_option('setting_analytics_event_tracking');
 
@@ -414,8 +419,7 @@ class mf_analytics
 
 		if($setting_analytics_tag_manager != '')
 		{
-			//wp_enqueue_script('script_analytics_tag_manager_api', "https://www.googletagmanager.com/gtm.js?id=".$setting_analytics_tag_manager);
-			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager, 'allow_cookies' => $allow_sensitive_data, 'version' => $plugin_version));
+			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_tag_manager, 'allow_cookies' => $allow_sensitive_data));
 		}
 
 		if($setting_google_search_console != '' && substr($setting_google_search_console, 0, 6) != 'google')
@@ -426,16 +430,9 @@ class mf_analytics
 
 	function wp_footer()
 	{
-		if(apply_filters('get_allow_cookies', true) == true)
+		if($this->footer_output != '')
 		{
-			$setting_analytics_facebook = get_option('setting_analytics_facebook');
-
-			if($setting_analytics_facebook != '')
-			{
-				echo "<noscript>
-					<img height='1' width='1' style='display:none' src='https://www.facebook.com/tr?id=".$setting_analytics_facebook."&ev=PageView&noscript=1'>
-				</noscript>";
-			}
+			echo $this->footer_output;
 		}
 	}
 
