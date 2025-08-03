@@ -16,6 +16,7 @@ class mf_analytics
 
 		$arr_settings = array();
 		$arr_settings['setting_analytics_albacross'] = "Albacross";
+		$arr_settings['setting_analytics_clarity'] = "Microsoft Clarity";
 		$arr_settings['setting_analytics_clicky'] = "Clicky";
 		$arr_settings['setting_analytics_facebook'] = "Facebook Pixel";
 		$arr_settings['setting_analytics_fullstory'] = "FullStory";
@@ -66,6 +67,16 @@ class mf_analytics
 			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
 		}
 
+		function setting_analytics_clarity_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			$suffix = ($option == '' ? "<a href='//clarity.microsoft.com/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
+		}
+
 		function setting_analytics_clicky_callback()
 		{
 			$setting_key = get_setting_key(__FUNCTION__);
@@ -83,7 +94,7 @@ class mf_analytics
 
 			$suffix = ($option == '' ? "<a href='//www.facebook.com/events_manager/pixel/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
-			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "1234", 'suffix' => $suffix));
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
 		}
 
 		function setting_analytics_fullstory_callback()
@@ -93,7 +104,7 @@ class mf_analytics
 
 			$suffix = ($option == '' ? "<a href='//fullstory.com/pricing/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
-			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "ABCD", 'suffix' => $suffix));
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
 		}
 
 		function setting_analytics_tag_manager_callback()
@@ -103,7 +114,7 @@ class mf_analytics
 
 			$suffix = ($option == '' ? "<a href='//google.com/analytics/tag-manager/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
-			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "G-012ABC", 'suffix' => $suffix));
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
 		}
 
 		function setting_google_search_console_callback()
@@ -113,7 +124,7 @@ class mf_analytics
 
 			$suffix = ($option == '' ? "<a href='//search.google.com/search-console'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
-			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => sprintf(__("%s or %s", 'lang_analytics'), "google0e4fd57ef13448cd.html", "abcABC"), 'suffix' => $suffix));
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
 		}
 
 	function settings_analytics_google_callback()
@@ -130,7 +141,7 @@ class mf_analytics
 
 			$suffix = ($option == '' ? "<a href='//analytics.google.com/analytics/web/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
-			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'placeholder' => "UA-0000000-0", 'suffix' => $suffix));
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
 		}
 
 		function setting_analytics_event_tracking_callback()
@@ -185,7 +196,12 @@ class mf_analytics
 			'setting_analytics_clicky' => array(
 				'type' => 'string',
 				'global' => false,
-				//'icon' => "fab fa-cuttlefish",
+				'icon' => "fab fa-microsoft",
+				'name' => __("Analytics", 'lang_analytics')." - "."Microsoft Clarity",
+			),
+			'script_analytics_clarity' => array(
+				'type' => 'string',
+				'global' => false,
 				'icon' => "fas fa-mouse-pointer",
 				'name' => __("Analytics", 'lang_analytics')." - "."Clicky",
 			),
@@ -231,35 +247,9 @@ class mf_analytics
 			$array['public']['nQ_cookieId'] = array('label' => sprintf(__("Identify %s User", 'lang_analytics'), "Albacross"), 'used' => false, 'lifetime' => "1 year");
 		}
 
-		if(get_option('setting_analytics_clicky') != '')
-		{
-			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
-		}
-
-		if(get_option('setting_analytics_facebook') != '')
-		{
-			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
-		}
-
-		if(get_option('setting_analytics_fullstory') != '')
-		{
-			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
-		}
-
 		if(get_option('setting_analytics_google') != '')
 		{
 			$array['public']['_ga'] = array('label' => sprintf(__("Used to distinguish %s users", 'lang_analytics'), "Analytics"), 'used' => false, 'lifetime' => "2 year"); // 2 years
-			//$array['public']['_gid'] = array('label' => sprintf(__("Used to distinguish %s users", 'lang_analytics'), "Analytics"), 'used' => false, 'lifetime' => "24 hour");
-		}
-
-		if(get_option('setting_analytics_tag_manager') != '')
-		{
-			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
-		}
-
-		if(get_option('setting_google_search_console') != '')
-		{
-			//$array['public']['cookie_key_...'] = array('label' => __("Cookie Explanation...", 'lang_analytics'), 'used' => false, 'lifetime' => "");
 		}
 
 		return $array;
@@ -278,6 +268,11 @@ class mf_analytics
 		if(get_option('setting_analytics_clicky') != '')
 		{
 			$arr_services[] = "Clicky";
+		}
+
+		if(get_option('script_analytics_clarity') != '')
+		{
+			$arr_services[] = "Microsoft Clarity";
 		}
 
 		if(get_option('setting_analytics_facebook') != '')
@@ -351,6 +346,7 @@ class mf_analytics
 		$allow_sensitive_data = apply_filters('get_allow_cookies', true);
 
 		$setting_analytics_albacross = get_option('setting_analytics_albacross');
+		$script_analytics_clarity = get_option('script_analytics_clarity');
 		$setting_analytics_clicky = get_option('setting_analytics_clicky');
 		$setting_analytics_facebook = get_option('setting_analytics_facebook');
 		$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
@@ -363,6 +359,11 @@ class mf_analytics
 		if($setting_analytics_albacross != '')
 		{
 			mf_enqueue_script('script_analytics_albacross', $plugin_include_url."script_albacross.js", array('api_key' => $setting_analytics_albacross, 'allow_cookies' => $allow_sensitive_data));
+		}
+
+		if($setting_analytics_clarity != '')
+		{
+			mf_enqueue_script('script_analytics_clarity', $plugin_include_url."script_clarity.js", array('api_key' => $setting_analytics_clarity, 'allow_cookies' => $allow_sensitive_data));
 		}
 
 		if($setting_analytics_clicky != '')
