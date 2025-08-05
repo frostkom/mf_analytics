@@ -346,7 +346,7 @@ class mf_analytics
 		$allow_sensitive_data = apply_filters('get_allow_cookies', true);
 
 		$setting_analytics_albacross = get_option('setting_analytics_albacross');
-		$script_analytics_clarity = get_option('script_analytics_clarity');
+		$setting_analytics_clarity = get_option('setting_analytics_clarity');
 		$setting_analytics_clicky = get_option('setting_analytics_clicky');
 		$setting_analytics_facebook = get_option('setting_analytics_facebook');
 		$setting_analytics_fullstory = get_option('setting_analytics_fullstory');
