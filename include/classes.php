@@ -6,6 +6,11 @@ class mf_analytics
 
 	function __construct(){}
 
+	function init()
+	{
+		load_plugin_textdomain('lang_analytics', false, str_replace("/include", "", dirname(plugin_basename(__FILE__)))."/lang/");
+	}
+
 	function settings_analytics()
 	{
 		$options_area_orig = $options_area = __FUNCTION__;

@@ -3,7 +3,7 @@
 Plugin Name: MF Analytics
 Plugin URI: https://github.com/frostkom/mf_analytics
 Description:
-Version: 3.4.10
+Version: 3.4.11
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://martinfors.se
@@ -19,6 +19,8 @@ if(!function_exists('is_plugin_active') || function_exists('is_plugin_active') &
 
 	$obj_analytics = new mf_analytics();
 
+	add_action('init', array($obj_analytics, 'init'));
+
 	if(is_admin())
 	{
 		register_uninstall_hook(__FILE__, 'uninstall_analytics');
@@ -29,8 +31,6 @@ if(!function_exists('is_plugin_active') || function_exists('is_plugin_active') &
 		add_filter('filter_sites_table_settings', array($obj_analytics, 'filter_sites_table_settings'));
 
 		add_filter('filter_cookie_types', array($obj_analytics, 'filter_cookie_types'));
-
-		load_plugin_textdomain('lang_analytics', false, dirname(plugin_basename(__FILE__))."/lang/");
 	}
 
 	else
