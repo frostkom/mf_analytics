@@ -3,14 +3,12 @@
 Plugin Name: MF Analytics
 Plugin URI: https://github.com/frostkom/mf_analytics
 Description:
-Version: 3.4.11
+Version: 3.4.12
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://martinfors.se
 Text Domain: lang_analytics
 Domain Path: /lang
-
-API Documentation: https://developers.google.com/analytics/devguides/collection/analyticsjs/cookies-user-id
 */
 
 if(!function_exists('is_plugin_active') || function_exists('is_plugin_active') && is_plugin_active("mf_base/index.php"))
