@@ -442,7 +442,7 @@ class mf_analytics
 		}
 	}
 
-	function login_redirect($redirect_to, $request, $user)
+	function login_redirect($redirect_to, $user_data)
 	{
 		$setting_analytics_campaign_name = get_option('setting_analytics_campaign_name');
 
@@ -454,7 +454,7 @@ class mf_analytics
 			$redirect_to .= (strpos($redirect_to, "?") ? "&" : "?")
 				."utm_source=".$utm_source
 				."&utm_medium=".$utm_medium
-				."&utm_campaign=".$setting_analytics_campaign_name; //."&utm_term=".$user->user_login
+				."&utm_campaign=".$setting_analytics_campaign_name; //."&utm_term=".$user_data->user_login
 		}
 
 		return $redirect_to;
