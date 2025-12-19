@@ -442,7 +442,7 @@ class mf_analytics
 		}
 	}
 
-	function login_redirect($redirect_to, $user_data)
+	function filter_login_redirect($redirect_to, $user_data)
 	{
 		$setting_analytics_campaign_name = get_option('setting_analytics_campaign_name');
 
