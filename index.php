@@ -2,8 +2,8 @@
 /*
 Plugin Name: MF Analytics
 Plugin URI: https://github.com/frostkom/mf_analytics
-Description:
-Version: 3.4.14
+Description: Adds support for multiple analytics tools
+Version: 3.4.15
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://martinfors.se
