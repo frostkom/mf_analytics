@@ -3,7 +3,7 @@
 Plugin Name: MF Analytics
 Plugin URI: https://github.com/frostkom/mf_analytics
 Description: Adds support for multiple analytics tools
-Version: 3.4.15
+Version: 3.4.16
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://martinfors.se
@@ -46,7 +46,7 @@ if(!function_exists('is_plugin_active') || function_exists('is_plugin_active') &
 	function uninstall_analytics()
 	{
 		mf_uninstall_plugin(array(
-			'options' => array('setting_analytics_albacross', 'setting_analytics_clarity', 'setting_analytics_clicky', 'setting_analytics_facebook', 'setting_analytics_fullstory', 'setting_analytics_tag_manager', 'setting_google_search_console', 'setting_analytics_google', 'setting_analytics_event_tracking', 'setting_analytics_campaign_name', 'setting_analytics_save_admin_stats'),
+			'options' => array('setting_analytics_albacross', 'setting_analytics_clarity', 'setting_analytics_clicky', 'setting_analytics_facebook', 'setting_analytics_fullstory', 'setting_analytics_tag_manager', 'setting_analytics_mailer_lite', 'setting_google_search_console', 'setting_analytics_google', 'setting_analytics_event_tracking', 'setting_analytics_campaign_name', 'setting_analytics_save_admin_stats'),
 		));
 	}
 }

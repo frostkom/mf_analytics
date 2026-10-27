@@ -21,7 +21,6 @@ class mf_analytics
 
 		$arr_settings = array();
 		$arr_settings['setting_analytics_albacross'] = "Albacross";
-		$arr_settings['setting_analytics_clarity'] = "Microsoft Clarity";
 		$arr_settings['setting_analytics_clicky'] = "Clicky";
 		$arr_settings['setting_analytics_facebook'] = "Facebook Pixel";
 		$arr_settings['setting_analytics_fullstory'] = "FullStory";
@@ -33,6 +32,8 @@ class mf_analytics
 
 		$arr_settings['setting_analytics_tag_manager'] = "Google Tag Manager";
 		$arr_settings['setting_google_search_console'] = "Google Search Console";
+		$arr_settings['setting_analytics_mailer_lite'] = "Mailer Lite";
+		$arr_settings['setting_analytics_clarity'] = "Microsoft Clarity";
 
 		show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
 		############################
@@ -128,6 +129,16 @@ class mf_analytics
 			$option = get_option($setting_key);
 
 			$suffix = ($option == '' ? "<a href='//search.google.com/search-console'>".__("Get yours here", 'lang_analytics')."</a>" : "");
+
+			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
+		}
+
+		function setting_analytics_mailer_lite_callback()
+		{
+			$setting_key = get_setting_key(__FUNCTION__);
+			$option = get_option($setting_key);
+
+			$suffix = ($option == '' ? "<a href='//www.mailerlite.com/'>".__("Get yours here", 'lang_analytics')."</a>" : "");
 
 			echo show_textfield(array('name' => $setting_key, 'value' => $option, 'suffix' => $suffix));
 		}
@@ -240,6 +251,12 @@ class mf_analytics
 				'icon' => "fab fa-google",
 				'name' => __("Analytics", 'lang_analytics')." - "."Google Search Console",
 			),
+			'setting_analytics_mailer_lite' => array(
+				'type' => 'string',
+				'global' => false,
+				'icon' => "fas fa-book",
+				'name' => __("Analytics", 'lang_analytics')." - "."Mailer Lite",
+			),
 		);
 
 		return $arr_settings;
@@ -305,6 +322,11 @@ class mf_analytics
 			$arr_services[] = "Google Search Console";
 		}
 
+		if(get_option('setting_analytics_mailer_lite') != '')
+		{
+			$arr_services[] = "Mailer Lite";
+		}
+
 		$count_temp = count($arr_services);
 
 		for($i = 0; $i < $count_temp; $i++)
@@ -358,6 +380,7 @@ class mf_analytics
 		$setting_analytics_google = get_option('setting_analytics_google');
 		$setting_analytics_tag_manager = get_option('setting_analytics_tag_manager');
 		$setting_google_search_console = get_option('setting_google_search_console');
+		$setting_analytics_mailer_lite = get_option('setting_analytics_mailer_lite');
 
 		$plugin_include_url = plugin_dir_url(__FILE__);
 
@@ -431,6 +454,11 @@ class mf_analytics
 		if($setting_google_search_console != '' && substr($setting_google_search_console, 0, 6) != 'google')
 		{
 			echo "<meta name='google-site-verification' content='".$setting_google_search_console."'>";
+		}
+
+		if($setting_analytics_mailer_lite != '')
+		{
+			mf_enqueue_script('script_analytics_mailer_lite', $plugin_include_url."script_mailer_lite.js", array('account_id' => $setting_analytics_mailer_lite, 'allow_cookies' => $allow_sensitive_data));
 		}
 	}
 
