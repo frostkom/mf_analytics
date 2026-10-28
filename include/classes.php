@@ -418,7 +418,7 @@ class mf_analytics
 
 		if($setting_analytics_google != '')
 		{
-			mf_enqueue_script('script_analytics_tag_manager', $plugin_include_url."script_tag_manager.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_sensitive_data));
+			mf_enqueue_script('script_analytics_google', $plugin_include_url."script_google.js", array('api_key' => $setting_analytics_google, 'allow_cookies' => $allow_sensitive_data));
 
 			$option = get_option('setting_analytics_event_tracking');
 
