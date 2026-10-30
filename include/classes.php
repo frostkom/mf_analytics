@@ -370,7 +370,7 @@ class mf_analytics
 
 	function wp_head()
 	{
-		$allow_sensitive_data = apply_filters('get_allow_cookies', true);
+		$allow_sensitive_data = apply_filters('get_allow_cookies', false);
 
 		$setting_analytics_albacross = get_option('setting_analytics_albacross');
 		$setting_analytics_clarity = get_option('setting_analytics_clarity');

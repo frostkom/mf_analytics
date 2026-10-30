@@ -1,4 +1,4 @@
-if(script_analytics_facebook.allow_cookies == true || document.cookie.indexOf("cookie_accepted=") !== -1)
+if(script_analytics_facebook.allow_cookies == true || document.cookie.split('; ').indexOf('cookie_accepted=true') !== -1)
 {
 	!function(f,b,e,v,n,t,s)
 	{

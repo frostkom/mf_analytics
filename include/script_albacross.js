@@ -1,4 +1,4 @@
-if(script_analytics_albacross.allow_cookies == true || document.cookie.indexOf("cookie_accepted=") !== -1)
+if(script_analytics_albacross.allow_cookies == true || document.cookie.split('; ').indexOf('cookie_accepted=true') !== -1)
 {
 	jQuery(function($)
 	{

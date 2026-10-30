@@ -1,4 +1,4 @@
-if(script_analytics_fullstory.allow_cookies == true || document.cookie.indexOf("cookie_accepted=") !== -1)
+if(script_analytics_fullstory.allow_cookies == true || document.cookie.split('; ').indexOf('cookie_accepted=true') !== -1)
 {
 	window['_fs_debug'] = false;
 	window['_fs_host'] = 'fullstory.com';

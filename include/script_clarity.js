@@ -1,4 +1,4 @@
-if(script_analytics_clarity.allow_cookies == true || document.cookie.indexOf("cookie_accepted=") !== -1)
+if(script_analytics_clarity.allow_cookies == true || document.cookie.split('; ').indexOf('cookie_accepted=true') !== -1)
 {
 	(function(c,l,a,r,i,t,y){
 		c[a]=c[a]||function(){ (c[a].q=c[a].q||[]).push(arguments) };
